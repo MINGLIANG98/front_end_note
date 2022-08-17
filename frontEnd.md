@@ -945,3 +945,8 @@ https://www.codeleading.com/article/14625764044/
 
 **假值:例如 false, null,0, "", undefined, 和 NaN 都是被认为是“假值==false”。**
 if(value) 可以判断是否为假值 value 会被隐式性转换为 true 或 false
+
+# Git
+
+**submodule**
+git submodule update 更新子模块 默认 submodule 的 HEAD 处于游离分支
