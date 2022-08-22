@@ -22,6 +22,8 @@
 a! ==>非空断言操作符 断言变量 a 为非 null 和 undefined，躲过类型检查器
 !a 变量取反，转为 boolean
 !!a 变量取反再取反 === 变量转为 boolean 值
+**js 逻辑运算符**
+`if(a > 10) { doSomething(a) } === a > 10 && doSomething(a)`
 
 <!-- const sayHello = (name: string | undefined) => { /_ ... _/ }; -->
 
@@ -249,6 +251,11 @@ console.log(arr) // [3, 2, 1] -->
 <!-- const arr = [1, 2, 3, 4, 5]
 console.log(arr.toString()) // ‘1, 2, 3, 4, 5’
 console.log(arr) // [1, 2, 3, 4, 5] -->
+
+**fill**
+
+`const array = Array(6).fill(''); // ['', '', '', '', '', ''] `
+`Array(6).fill() //[undefined, undefined, undefined, undefined, undefined, undefined]`
 
 # 数组循环方法
 
@@ -591,15 +598,11 @@ children: []
 
 https://www.cnblogs.com/dreamsqin/p/11305028.html
 
-# grid 布局
+# CSS
 
-**2022_5_11**
-react 18 Automatic batching 使用 setState 来进行 dispatch 组件 State 变化，当 setState 在组件被调用后，并不会立即触发重新渲染。React 会执行全部事件处理函数，然后触发一个单独的 re-render，合并所有更新。
+**grid 布局**
 
-<!-- ReactDOM.flushSync(() => {
-      setCount((c) => c + 1); // 立刻重渲染
-      setFlag((f) => !f); // 立刻重渲染
-    }); -->
+height: calc(100vh - 150px);
 
 CSS_grid 布局
 
@@ -607,118 +610,11 @@ CSS_grid 布局
 
 https://juejin.cn/post/6854573220306255880
 
-# react_hooks 总结
-
-**2022_5_12**
-状态 usestate
-redux useReducer
-副作用 useEffect-->uselayoutEffect ->react 函数式组件的函数体中，网络请求，模块订阅以及 DOM 操作都属与 _副作用_
-上下文 useContext
-记忆 useMemo-->useCallback
-引用 useRef-->useImperativeHandle
-自定义 hook
-
-<!--? 新增 useEvent -->
-
-**useEffect 和 useState**
-
- <!-- usestate 默认值在组件创建时生效
- const [datalist, setdatalist] = useState([...(dataSource ?? [])]); -->
-
-组件每次渲染时传入的引用类型都会重新开辟一个全新的引用地址
-浅层比较数据变化 对于对象和数组类的引用类型数据，数据一样但地址不同都会触发重复渲染
-**useRef**
-深层次比较 是跨渲染周期缓存数据。缓存上一次渲染的数据，并调用深比较方法判断，如果两个对象相等则返回上一次的数据，地址自然也没有变化。
-**useImperativeHandle 和 forwardRef**
-建议 useImperativeHandle 和 forwardRef 同时使用，减少暴露给父组件的属性
-forwardref 与泛型组件搭配使用-->
-
-<!-- react.forwardRef 高阶组件包裹的组件无法传递泛型参数 -->
-<!-- https://juejin.cn/post/7081460215085793310 -->
-
-https://fettblog.eu/typescript-react-generic-forward-refs/
-**useEffect 和 useLayoutEffect**
-useEffect 是异步执行的，而 useLayoutEffect 是同步执行的。
-**useEvent**
-缓存相同函数引用，同时不会产生闭包，依然可以取到最新的 state
-https://juejin.cn/post/7094186419500875812
-
-`useLayoutEffect:是在所有DOM变更之后浏览器渲染之前调用，既同步调用 副作用会阻塞代码阻塞页面加载 useEffect:是在组件渲染到屏幕之后执行，既异步调用`
-
-useEffect 的执行时机是浏览器完成渲染之后，而 useLayoutEffect 的执行时机是浏览器把内容真正渲染到界面之前，和 componentDidMount 等价。
-**useMemo 和 useCallback**
-
-<!-- 2022_4_26 -->
-
-useMemo
-const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
-当 a 和 b 不变时，computeExpensiveValue(a, b)的返回值不会重新计算。
-
-<!-- 把“创建”函数和依赖项数组作为参数传入 useMemo，它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算。 -->
-
-useCallback
-useCallback(() => {
-setCount2(count2 + 1);
-}, [count2]);
-其实第二个参数和 useEffect 的效果一样；
-当我们不传入第二个参数的时候，所有的状态改变都会触发 useCallback 重新返回一个新的缓存函数；
-当我们你传入一个空数组的时候，所有状态的改变都不会触发 useCallback 重新返回一个新的缓存函数；
-当我们传入一个数组，并且数组中有变量的时候，只有这个变量状态改变才会触发 useCallback 重新返回一个新的缓存函数；
-————————————————
-原文链接：https://blog.csdn.net/qq_43291759/article/details/121834809
-
-<!-- 返回一个函数，只有在依赖项发生变化的时候才会更新（返回一个新的函数）。 -->
-<!--todo 简单理解呢 useCallback 与 useMemo 一个缓存的是函数，一个缓存的是函数的返回值。useCallback 是来优化子组件的，防止子组件的重复渲染。useMemo 可以优化当前组件也可以优化子组件，优化当前组件主要是通过 memoize 来将一些复杂的计算逻辑进行缓存。-->
-<!-- useCallback和useMemo的参数跟useEffect一致，他们之间最大的区别有是useEffect会用于处理副作用，而前两个hooks不能。
-useMemo和useCallback都会在组件第一次渲染的时候执行，之后会在其依赖的变量发生改变时再次执行；并且这两个hooks都返回缓存的值，useMemo返回缓存的变量，useCallback返回缓存的函数。 -->
-
-1. useCallback(fn, deps)相当于 useMemo( () => fn, deps)。
-2. 可以把 useMemo 当作性能优化的手段，但不要把他当成语义上的保证。
-3. React.memo 仅作为性能优化的方式存在，不要依赖它来阻止重新渲染，这会产生 bug。
-4. useMemo 缓存变量，useCallback 缓存函数。 使用场景: 组件缓存
-   https://juejin.cn/post/7039216773710741535
-
-**useContext**
-
-<!-- 2022_4_25 -->
-
-useContext createContext 创建数据变量，子组件通过 useContext 导入
-
-<!-- createContext 能够创建一个 React 的 上下文（context），然后订阅了这个上下文的组件中，可以拿到上下文中提供的数据或者其他信息。 使用 useContext 获取上下文 -->
-
-https://segmentfault.com/a/1190000039200472
-
-# css 重绘优化
-
+**css 重绘优化**
 **fix 绝对定位使用 transform: translateZ(0);开启 gpu 优化避免多次渲染卡顿**
 https://segmentfault.com/a/1190000000490328
 
-# File、Blob、ArrayBuffer 等文件类的对象有什么区别和联系
-
-Blob 是一种二进制对象(包括字符，文件等等)，es6 对其进行了补充
-File 是基于 Blob 的一种二进制文件对象,扩展了 Blob，es6 同样进行了补充
-ArrayBuffer 是 ES6 新引入的二进制缓冲区
-Buffer 是 Nodejs 内置的二进制缓冲区，Buffer 相当于 ES6 中 Uint8Array(属于 TypedArray)的一种扩展
-
-除非您需要编写/编辑的能力（使用 ArrayBuffer），否则 Blob 格式可能是最好的。
-https://nibes.cn/blog/21263
-
-# 正则表达式使用指南
-
-https://mp.weixin.qq.com/s/gTSdWDew1-JPsssFd_gkug
-
-# react 开发工具类
-
-<!-- 组件跳转 -->
-
-click-to-component
-
-<!-- 页面切换动画效果 -->
-
-react-page-transition
-https://mp.weixin.qq.com/s/9NFB1uNqNWiARbmUdWrBWQ
-
-# css 伪类
+**css 伪类**
 
 :active
 ::after/:after
@@ -790,6 +686,152 @@ _验证伪类_
 input[type=email]:invalid {
 background: orange;
 }
+
+**css 变量**
+
+https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties
+声明一个 css 变量，属性名需要以两个减号（--）开始，属性值则可以是任何有效的 CSS 值。和其他属性一样，自定义属性也是写在规则集之内的，如下：
+
+<!-- :root 根伪类 -->
+
+:root {
+--main-bg-color: brown;
+}
+
+.one {
+color: white;
+background-color: var(--main-bg-color);
+margin: 10px;
+width: 50px;
+height: 50px;
+display: inline-block;
+}
+.two {
+color: var(--my-var, red); /_ Red if --my-var is not defined _/
+}
+**获取一个 Dom 节点上的 CSS 变量**
+element.style.getPropertyValue("--my-var");
+
+**获取任意 Dom 节点上的 CSS 变量**
+getComputedStyle(element).getPropertyValue("--my-var");
+
+**修改一个 Dom 节点上的 CSS 变量**
+element.style.setProperty("--my-var", jsVar + 4);
+
+**css 瀑布流**
+https://juejin.cn/post/7014650146000470053
+
+# react_hooks 总结
+
+**2022_5_12**
+状态 usestate
+redux useReducer
+副作用 useEffect-->uselayoutEffect ->react 函数式组件的函数体中，网络请求，模块订阅以及 DOM 操作都属与 _副作用_
+上下文 useContext
+记忆 useMemo-->useCallback
+引用 useRef-->useImperativeHandle
+自定义 hook
+
+<!--? 新增 useEvent -->
+
+**useEffect 和 useState**
+
+ <!-- usestate 默认值在组件创建时生效
+ const [datalist, setdatalist] = useState([...(dataSource ?? [])]); -->
+
+**2022_5_11**
+react 18 Automatic batching 使用 setState 来进行 dispatch 组件 State 变化，当 setState 在组件被调用后，并不会立即触发重新渲染。React 会执行全部事件处理函数，然后触发一个单独的 re-render，合并所有更新。
+
+`ReactDOM.flushSync(() => { setCount((c) => c + 1); // 立刻重渲染 setFlag((f) => !f); // 立刻重渲染 });`
+
+组件每次渲染时传入的引用类型都会重新开辟一个全新的引用地址
+浅层比较数据变化 对于对象和数组类的引用类型数据，数据一样但地址不同都会触发重复渲染
+**useRef**
+深层次比较 是跨渲染周期缓存数据。缓存上一次渲染的数据，并调用深比较方法判断，如果两个对象相等则返回上一次的数据，地址自然也没有变化。
+**useImperativeHandle 和 forwardRef**
+建议 useImperativeHandle 和 forwardRef 同时使用，减少暴露给父组件的属性
+forwardref 与泛型组件搭配使用-->
+
+<!-- react.forwardRef 高阶组件包裹的组件无法传递泛型参数 -->
+
+https://juejin.cn/post/7081460215085793310
+
+https://fettblog.eu/typescript-react-generic-forward-refs/
+**useEffect 和 useLayoutEffect**
+useEffect 是异步执行的，而 useLayoutEffect 是同步执行的。
+**useEvent**
+缓存相同函数引用，同时不会产生闭包，依然可以取到最新的 state
+https://juejin.cn/post/7094186419500875812
+
+`useLayoutEffect:是在所有DOM变更之后浏览器渲染之前调用，既同步调用 副作用会阻塞代码阻塞页面加载 useEffect:是在组件渲染到屏幕之后执行，既异步调用`
+
+useEffect 的执行时机是浏览器完成渲染之后，而 useLayoutEffect 的执行时机是浏览器把内容真正渲染到界面之前，和 componentDidMount 等价。
+**useMemo 和 useCallback**
+
+<!-- 2022_4_26 -->
+
+useMemo
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+当 a 和 b 不变时，computeExpensiveValue(a, b)的返回值不会重新计算。
+
+<!-- 把“创建”函数和依赖项数组作为参数传入 useMemo，它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算。 -->
+
+useCallback
+useCallback(() => {
+setCount2(count2 + 1);
+}, [count2]);
+其实第二个参数和 useEffect 的效果一样；
+当我们不传入第二个参数的时候，所有的状态改变都会触发 useCallback 重新返回一个新的缓存函数；
+当我们你传入一个空数组的时候，所有状态的改变都不会触发 useCallback 重新返回一个新的缓存函数；
+当我们传入一个数组，并且数组中有变量的时候，只有这个变量状态改变才会触发 useCallback 重新返回一个新的缓存函数；
+————————————————
+原文链接：https://blog.csdn.net/qq_43291759/article/details/121834809
+
+<!-- 返回一个函数，只有在依赖项发生变化的时候才会更新（返回一个新的函数）。 -->
+<!--todo 简单理解呢 useCallback 与 useMemo 一个缓存的是函数，一个缓存的是函数的返回值。useCallback 是来优化子组件的，防止子组件的重复渲染。useMemo 可以优化当前组件也可以优化子组件，优化当前组件主要是通过 memoize 来将一些复杂的计算逻辑进行缓存。-->
+<!-- useCallback和useMemo的参数跟useEffect一致，他们之间最大的区别有是useEffect会用于处理副作用，而前两个hooks不能。
+useMemo和useCallback都会在组件第一次渲染的时候执行，之后会在其依赖的变量发生改变时再次执行；并且这两个hooks都返回缓存的值，useMemo返回缓存的变量，useCallback返回缓存的函数。 -->
+
+1. useCallback(fn, deps)相当于 useMemo( () => fn, deps)。
+2. 可以把 useMemo 当作性能优化的手段，但不要把他当成语义上的保证。
+3. React.memo 仅作为性能优化的方式存在，不要依赖它来阻止重新渲染，这会产生 bug。
+4. useMemo 缓存变量，useCallback 缓存函数。 使用场景: 组件缓存
+   https://juejin.cn/post/7039216773710741535
+
+**useContext**
+
+<!-- 2022_4_25 -->
+
+useContext createContext 创建数据变量，子组件通过 useContext 导入
+
+<!-- createContext 能够创建一个 React 的 上下文（context），然后订阅了这个上下文的组件中，可以拿到上下文中提供的数据或者其他信息。 使用 useContext 获取上下文 -->
+
+https://segmentfault.com/a/1190000039200472
+
+# File、Blob、ArrayBuffer 等文件类的对象有什么区别和联系
+
+Blob 是一种二进制对象(包括字符，文件等等)，es6 对其进行了补充
+File 是基于 Blob 的一种二进制文件对象,扩展了 Blob，es6 同样进行了补充
+ArrayBuffer 是 ES6 新引入的二进制缓冲区
+Buffer 是 Nodejs 内置的二进制缓冲区，Buffer 相当于 ES6 中 Uint8Array(属于 TypedArray)的一种扩展
+
+除非您需要编写/编辑的能力（使用 ArrayBuffer），否则 Blob 格式可能是最好的。
+https://nibes.cn/blog/21263
+
+# 正则表达式使用指南
+
+https://mp.weixin.qq.com/s/gTSdWDew1-JPsssFd_gkug
+
+# react 开发工具类
+
+<!-- 组件跳转 -->
+
+click-to-component
+
+<!-- 页面切换动画效果 -->
+
+react-page-transition
+https://mp.weixin.qq.com/s/9NFB1uNqNWiARbmUdWrBWQ
 
 # React Hook 重复渲染问题处理：useMemo, memo, useCallback
 
@@ -898,37 +940,6 @@ console.log(language)
 
 ```
 
-# css 变量
-
-https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties
-声明一个 css 变量，属性名需要以两个减号（--）开始，属性值则可以是任何有效的 CSS 值。和其他属性一样，自定义属性也是写在规则集之内的，如下：
-
-<!-- :root 根伪类 -->
-
-:root {
---main-bg-color: brown;
-}
-
-.one {
-color: white;
-background-color: var(--main-bg-color);
-margin: 10px;
-width: 50px;
-height: 50px;
-display: inline-block;
-}
-.two {
-color: var(--my-var, red); /_ Red if --my-var is not defined _/
-}
-**获取一个 Dom 节点上的 CSS 变量**
-element.style.getPropertyValue("--my-var");
-
-**获取任意 Dom 节点上的 CSS 变量**
-getComputedStyle(element).getPropertyValue("--my-var");
-
-**修改一个 Dom 节点上的 CSS 变量**
-element.style.setProperty("--my-var", jsVar + 4);
-
 # react 自定义 hooks
 
 https://juejin.cn/post/6844904074433789959#heading-5
@@ -950,3 +961,6 @@ if(value) 可以判断是否为假值 value 会被隐式性转换为 true 或 fa
 
 **submodule**
 git submodule update 更新子模块 默认 submodule 的 HEAD 处于游离分支
+**clone**
+git clone -b 想要拉取的分支名(branch) xxx(URL) 文件名(省略为原名)
+-b 为 --branch 缩写
