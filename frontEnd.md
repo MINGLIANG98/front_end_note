@@ -898,7 +898,7 @@ Object.getOwnPropertyDescriptor(users, 'languages')
 Object.defineProperty(users, 'role', { value: 'Admin', writable: true, enumerable: false })
 
 for (const item in users) {
-console.log(item) // languages 没有输出 users 的 role 属性，因为它是不可迭代属性 enumerable:false
+console.log(item) // languages 没有输出 users 的 role 属性，因为它是不可枚举属性 enumerable:false
 }
 
 ```
@@ -964,3 +964,22 @@ git submodule update 更新子模块 默认 submodule 的 HEAD 处于游离分�
 **clone**
 git clone -b 想要拉取的分支名(branch) xxx(URL) 文件名(省略为原名)
 -b 为 --branch 缩写
+
+# 服务端渲染 SSR-客户端渲染 CSR-静态站点生成 SSG
+
+https://juejin.cn/post/7128369638794231839
+**客户端渲染 CSR**
+常规开发框架单页面应用 js 动态渲染 dom 树结构==动态渲染==客户端渲染
+**服务端渲染 SSR**
+通过 http 请求返回整个 html 文本页面直接给浏览器解析 不需要 js 脚本解析
+服务端组装 HTML 并返回给前端的过程==服务端 SSR
+**静态网站生成 SSG**
+html 页面内容在 build 的时候就定型了，相对于 SSR 不需要后端二次请求查询组装，直接返回 build 源代码
+缺陷：静态页面，不适合展示内容灵活的 web 页面
+优势：适合个人博客，使用文档等充满静态页面的网站
+**预加载**
+
+- preload 告诉浏览器该请求资源需要预先加载 提高优先级
+- preconnect 告诉浏览器需要该域名的资源
+- dns-prefetch dns 预获取 告诉浏览器预先解析域名
+- prefetch 告诉浏览器需要优先获取或者缓存该资源
