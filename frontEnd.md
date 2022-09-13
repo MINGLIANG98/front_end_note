@@ -1029,3 +1029,15 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 eval() 的参数是一个字符串。如果字符串表示的是表达式，eval() 会对表达式进行求值。如果参数表示一个或多个 JavaScript 语句，那么 eval() 就会执行这些语句。
 如果 eval() 的参数不是字符串， eval() 会将参数原封不动地返回
 eval 内的代码在当前词法环境（lexical environment）中执行，因此它能访问外部变量
+
+# 单元测试
+jest.js
+适合工具类函数进行单元测试
+https://juejin.cn/post/7039108357554176037
+
+# 发布订阅模式详解
+
+[手动实现一个发布订阅模式](https://juejin.cn/post/6985156199192723487)
+**概念**
+发布-订阅模式其实是一种对象间一对多的依赖关系，当一个对象的状态发送改变时，所有依赖于它的对象都将得到状态改变的通知。
+订阅者（Subscriber）把自己想订阅的事件注册（Subscribe）到调度中心（Event Channel），当发布者（Publisher）发布该事件（Publish Event）到调度中心，也就是该事件触发时，由调度中心统一调度（Fire Event）订阅者注册到调度中心的处理代码。
