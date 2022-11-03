@@ -89,7 +89,55 @@ Promise.race([]).then().catch() race()接受参数与 all 相同 返回最先执
 **手写 promise**
 <https://blog.csdn.net/m0_52409770/article/details/123446776>
 
-**如何优雅的中断 promise 请求**
+**如何优雅的中断 promise 请求===如何终端一个 fetch 请求**
+xhr 终端一个请求 xhr 可使用其内置方法 abort 进行终止操作，但是 abort（中止）方法的执行过程不可控
+fetch 如何中止
+
+- AbortController 包含 signal 状态和 abort 方法的构造函数
+
+```js
+// 方法1--------
+// 实例对象 有两个属性  abort 方法中可传递中止的原因（任意js变量）
+const ac = new AbortController();
+const { signal } = ac;
+
+const resourceUrl = "https://jsonplaceholder.typicode.com/todos/1";
+fetch(resourceUrl, { signal })
+  .then((response) => response.json())
+  .then((json) => console.log(json))
+  .catch((err) => {
+    // 不同浏览器的返回结果不同
+    console.log(err);
+  });
+
+// 可以立即终止请求，或者设置一个定时器
+// ac.abort();
+setTimeout(() => {
+  ac.abort();
+}, 10);
+```
+
+- AbortSignal 有静态方法 abort 和 timeout 这两个方法是 AbortSignal 类上的静态方法，用来创造 AbortSignal 实例。其中 abort 用来创造一个已经被终止的信号对象。我们来看下面的例子
+
+```js
+// 方法2--------
+// ... 省略 todoRequest 函数的定义
+// Safari 暂时不支持， Firefox 和 Chrome 支持
+// abort 可以传递终止的原因
+// ...
+// const abortedAS = AbortSignal.abort({
+// type: 'USER_ABORT_ACTION',
+// msg: '用户终止了操作'
+// });
+// ...
+const abortedAS = AbortSignal.abort();
+// 再发送之前信号终止，请求不会被发送
+todoRequest(1, { signal: abortedAS });
+console.warn(abortedAS);
+```
+
+tip:dom 机制规范 nodejs 环境下均可使用该方法
+
 <https://mp.weixin.qq.com/s/uiWdL3qrCC9cxVBI87wKhA>
 
 <!-- !   函数柯里化？？？ -->
@@ -401,8 +449,9 @@ const foo = [5,1,3,7,4].some((item, index) => {
 console.log(foo)
  some 打印：
  索引：0，数值：5
- true 
+ true
 ```
+
  <!-- -->
 
 **filter()**
