@@ -72,8 +72,8 @@ record.rest = (Math.floor(record.total ?? 0) - Math.floor(record.yewu ?? 0) - Ma
         message: '字段不可小于零',
     }
     {
-        "_fun":
-            // ({ getFieldValue }) => ({
+    "_fun":
+    // ({ getFieldValue }) => ({
     //     validator(_, value) {
     //         const total = getFieldValue('total')
     //         if (!!total && value > total) {
@@ -82,7 +82,50 @@ record.rest = (Math.floor(record.total ?? 0) - Math.floor(record.yewu ?? 0) - Ma
     //         return Promise.resolve();
     //     },
     // })
-    }
+}
 ]
 
-[{"validator":"console.log('***',{record,value,rule,cc});","message":"校验错误"}]
+[{ "validator": "console.log('***',{record,value,rule,cc});", "message": "校验错误" }]
+
+    (function (window, undefined) {
+        var treeNodes = [
+            {
+                id: 1,
+                name: '1',
+                children: [
+                    {
+                        id: 11,
+                        name: '11',
+                        children: [
+                            {
+                                id: 111,
+                                name: '111',
+                                children: []
+                            },
+                            {
+                                id: 112,
+                                name: '112'
+                            }
+                        ]
+                    },
+                    {
+                        id: 12,
+                        name: '12',
+                        children: []
+                    }
+                ],
+                users: []
+            },
+            {
+                id: 2,
+                name: '2',
+                children: [
+                    {
+                        id: 22,
+                        name: '22',
+                        children: []
+                    }
+                ]
+            }
+        ]
+    })
