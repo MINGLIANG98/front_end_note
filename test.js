@@ -129,3 +129,37 @@ record.rest = (Math.floor(record.total ?? 0) - Math.floor(record.yewu ?? 0) - Ma
             }
         ]
     })
+
+    <div>
+                    {record["children.commitmentDeliveryDate"] ?
+                        <span>
+                            {
+                                moment(moment(record["children.commitmentDeliveryDate"]).format('YYYY-MM-DD')).isBefore(warnDate, 'day')
+                                    || moment(moment(record["children.commitmentDeliveryDate"]).format('YYYY-MM-DD')).isSame(warnDate, 'day') ?
+                                    <Tooltip title={
+                                        <div>
+                                            {moment(new Date()).diff(record["children.commitmentDeliveryDate"], 'day') > 0 ?
+                                                <div>逾期{moment(new Date()).diff(record["children.commitmentDeliveryDate"], 'day')}天</div> :
+                                                <div>剩余{Math.abs(moment(new Date()).diff(record["children.commitmentDeliveryDate"], 'day'))}天逾期</div>
+                                            }
+                                        </div>
+                                    }>
+                                        <div style={{ color: 'red' }}>{moment(record["children.commitmentDeliveryDate"]).format('YYYY-MM-DD')}</div>
+                                    </Tooltip> :
+                                    <div>{moment(record["children.commitmentDeliveryDate"]).format('YYYY-MM-DD')}</div>
+                            }
+                        </span> : <div>{moment(record.commitmentDeliveryDate).format('YYYY-MM-DD')}</div>}
+                </div>
+
+
+<>
+    {!!record.attach ? (
+        record.attach.map(file => (
+            <a href={file.url} download={file.name}  style={{display:'flex',height:"20px",paddingRight:'10px'}} >
+                {file.name}
+            </a>
+        ))
+    ) : (
+        ''
+    )}
+</>

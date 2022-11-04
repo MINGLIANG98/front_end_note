@@ -203,9 +203,9 @@ console.log(str.split("*")); // 输出 ["A", "B", "C", "D", "E", "F", "G"]
 
 5.substr(index,length), substring(index,lastindex)
 **不改变原字符串**
+这两个方法的功能都是截取一个字符串的片段，并返回截取的字符串。
+substr 和 substring 这两个方法不同的地方就在于参数二，substr 的参数二是截取返回出来的这个字符串指定的长度，substring 的参数二是截取返回这个字符串的结束点，并且不包含这个结束点。而它们的参数一，都是一样的功能，截取的起始位置。
 
-<!-- 这两个方法的功能都是截取一个字符串的片段，并返回截取的字符串。
-substr和substring这两个方法不同的地方就在于参数二，substr的参数二是截取返回出来的这个字符串指定的长度，substring的参数二是截取返回这个字符串的结束点，并且不包含这个结束点。而它们的参数一，都是一样的功能，截取的起始位置。 -->
 <!--! 注意事项：substr的参数二如果为0或者负数，则返回一个空字符串，如果未填入，则会截取到字符串的结尾去。substring的参数一和参数二为NAN或者负数，那么它将被替换为0。 -->
 
 ```js
@@ -218,16 +218,19 @@ console.log(str.substring(2, 9)); // 输出 'CDEFGHI'
 
 6.match() match()方法可在字符串内检索指定的值，或找到一个或多个正则表达式的匹配，并返回一个包含该搜索结果的数组。
 
-<!-- const str = '2018年结束了，2019年开始了，2020年就也不远了'
+```js
+const str = '2018年结束了，2019年开始了，2020年就也不远了'
 const reg = /\d+/g  // 这里是定义匹配规则，匹配字符串里的1到多个数字
 console.log(str.match(reg))  // 输出符合匹配规则的内容，以数组形式返回 ['2018', '2019', '2020']
-console.log(str.match('20'))  // 不使用正则 ['20', index: 0, input: '2018年结束了，2019年开始了，2020年就也不远了', groups: undefined] -->
+console.log(str.match('20'))  // 不使用正则 ['20', index: 0, input: '2018年结束了，2019年开始了，2020年就也不远了', groups: undefined]
 <!--! 注意事项:如果match方法没有找到匹配，将返回null。如果找到匹配，则 match方法会把匹配到以数组形式返回，如果正则规则未设置全局修饰符g，则 match方法返回的数组有两个特性：input和index。input属性包含整个被搜索的字符串。index属性包含了在整个被搜索字符串中匹配的子字符串的位置。 -->
+```
 
 7.replace()
 replace 接收两个参数，参数一是需要替换掉的字符或者一个正则的匹配规则，参数二，需要替换进去的字符，在实际的原理当中，参数二，你可以换成一个回调函数。
 
-<!-- const str = '2018年结束了，2019年开始了，2020年就也不远了'
+```js
+const str = '2018年结束了，2019年开始了，2020年就也不远了'
 const rex = /\d+/g  // 这里是定义匹配规则，匹配字符串里的1到多个数字
 const str1 = str.replace(rex, '****')
 console.log(str1) // 输出："****年结束了，****年开始了,****年也不远了"
@@ -240,21 +243,22 @@ const str2 = str.replace(rex, function(item){
    })
    return newStr
 })
-console.log(str2) // 输出：贰零壹捌年结束了，贰零壹玖年开始了,贰零贰零年也不远了 -->
+console.log(str2) // 输出：贰零壹捌年结束了，贰零壹玖年开始了,贰零贰零年也不远了
+```
 
 8.search() 在目标字符串中搜索与正则规则相匹配的字符，搜索到，则返回第一个匹配项在目标字符串当中的位置，没有搜索到则返回一个-1。
 
-<!-- const str = '2018年结束了，2019年开始了，2020年就也不远了'
-const reg = /\d+/i  // 这里是定义匹配规则,匹配字符串里的1到多个数字
-console.log(str.search(reg)) // 输出 0  这里搜索到的第一项是从位置0开始的 -->
+```js
+const str = "2018年结束了，2019年开始了，2020年就也不远了";
+const reg = /\d+/i; // 这里是定义匹配规则,匹配字符串里的1到多个数字
+console.log(str.search(reg)); // 输出 0  这里搜索到的第一项是从位置0开始的
+```
 
 9.toLowerCase(),toUpperCase()
-
-<!-- toLowerCase把字母转换成小写，toUpperCase()则是把字母转换成大写。 -->
+toLowerCase 把字母转换成小写，toUpperCase()则是把字母转换成大写。
 
 10.includes(), startsWith(), endsWith()
-
-<!-- includes、startsWith、endsWith，es6的新增方法，includes 用来检测目标字符串对象是否包含某个字符，返回一个布尔值，startsWith用来检测当前字符是否是目标字符串的起始部分，相对的endwith是用来检测是否是目标字符串的结尾部分。 -->
+includes、startsWith、endsWith，es6 的新增方法，includes 用来检测目标字符串对象是否包含某个字符，返回一个布尔值，startsWith 用来检测当前字符是否是目标字符串的起始部分，相对的 endwith 是用来检测是否是目标字符串的结尾部分。
 
 # 对象操作方法
 
@@ -288,40 +292,52 @@ arr.find(item=>item>5) //22
 方法在一个数组后面拼接新的元素，可接收 n 个参数，参数可以是任意数据类型，如果是数组，则将数组跟原数组拼接，如果是其他数据类型，则将该元素添加到原数组后面
 该方法**不改变原数组**，会返回拼接好的新数组，因此可以 执行 链式操作
 
-<!-- const arr = [1, 2, 3]
-const arr2 = arr.concat([7, 8, 9])
-console.log(arr) // [1, 2, 3]
-console.log(arr2) // [1, 2, 3, 7, 8, 9] -->
+```js
+const arr = [1, 2, 3];
+const arr2 = arr.concat([7, 8, 9]);
+console.log(arr); // [1, 2, 3]
+console.log(arr2); // [1, 2, 3, 7, 8, 9]
+```
 
 **indexOf()** 在数组中寻找该值，找到则返回其下标，找不到则返回-1。
 
-<!-- const arr = [1, 2, 3]
-console.log(arr.indexOf(2)) // 1
-console.log(arr.indexOf(0)) // -1 -->
+```js
+const arr = [1, 2, 3];
+console.log(arr.indexOf(2)); // 1
+console.log(arr.indexOf(0)); // -1
+```
 
 **includes()** 在数组中寻找该值，找到则返回 true，找不到则返回 false。
 
-<!-- const arr = [1, 2, 3]
-console.log(arr.includes(2)) // true
-console.log(arr.includes(4)) // false -->
+```js
+const arr = [1, 2, 3];
+console.log(arr.includes(2)); // true
+console.log(arr.includes(4)); // false
+```
 
 **join()** 将数组转化成字符串，并返回该字符串，不传值则默认逗号隔开，**_原数组不变。_**
 
-<!-- const arr = [1, 2, 3]
-console.log(arr.join()) // ‘1, 2, 3’
-console.log(arr) // [1, 2, 3] -->
+```js
+const arr = [1, 2, 3];
+console.log(arr.join()); // ‘1, 2, 3’
+console.log(arr); // [1, 2, 3]
+```
 
 **reverse()** 翻转原数组，并返回已完成翻转的数组，原数组改变。
 
-<!-- const arr = [1, 2, 3]
-console.log(arr.reverse()) // [3, 2, 1]
-console.log(arr) // [3, 2, 1] -->
+```js
+const arr = [1, 2, 3];
+console.log(arr.reverse()); // [3, 2, 1]
+console.log(arr); // [3, 2, 1]
+```
 
 **slice(start，end)** 从 start 开始截取到 end，但是不包括 end,**_原数组不变_**
 
-<!-- const arr = [1, 2, 3, 4, 5]
-console.log(arr.slice(1, 4)) // [2, 3, 4]
-console.log(arr) // [1, 2, 3, 4, 5] -->
+```js
+const arr = [1, 2, 3, 4, 5];
+console.log(arr.slice(1, 4)); // [2, 3, 4]
+console.log(arr); // [1, 2, 3, 4, 5]
+```
 
 **splice(start, deleteCount, item1, item2……)**
 start 参数 开始的位置——索引值位置 包括索引值
@@ -336,19 +352,27 @@ deleteCount 要截取(删除)的个数
 默认排序顺序是在将元素转换为字符串，然后比较它们的 UTF-16 代码单元值序列时构建的。
 由于它取决于具体实现，因此无法保证排序的时间和空间复杂性。回调函数返回值为 true 则交换 a,b 位置
 
-<!-- const arr = [1, 2, 3]
-arr.sort((a, b) => b - a)
-console.log(arr) // [3, 2, 1] -->
+```js
+const arr = [1, 2, 3];
+arr.sort((a, b) => b - a);
+console.log(arr); // [3, 2, 1]
+```
 
 **toString()** 将数组转化成字符串，并返回该字符串，逗号隔开，原数组不变。
 
-<!-- const arr = [1, 2, 3, 4, 5]
-console.log(arr.toString()) // ‘1, 2, 3, 4, 5’
-console.log(arr) // [1, 2, 3, 4, 5] -->
+```js
+const arr = [1, 2, 3, 4, 5];
+console.log(arr.toString()); // ‘1, 2, 3, 4, 5’
+console.log(arr); // [1, 2, 3, 4, 5]
+```
 
 **fill**
-`const array = Array(6).fill(''); // ['', '', '', '', '', '']`
-`Array(6).fill() //[undefined, undefined, undefined, undefined, undefined, undefined]`
+todo
+
+```js
+const array = Array(6).fill(""); // ['', '', '', '', '', '']
+Array(6).fill(); //[undefined, undefined, undefined, undefined, undefined, undefined]
+```
 
 # 数组循环方法
 
@@ -395,7 +419,8 @@ for...in for...in 是 ES5 标准，
 遍历数组的缺点：数组的下标 index 值是数字，for-in 遍历的 index 值"0","1","2"等是字符串。
 Object.defineProperty 建立的属性，默认不可枚举。
 
-<!-- const foo = {
+```js
+ const foo = {
     name: 'bar',
     sex: 'male'
 }
@@ -407,7 +432,8 @@ console.log(`age属性：${foo.age}`)
  打印结果：
  可枚举属性：name
  可枚举属性：sex
- age属性：18 -->
+ age属性：18
+```
 
 for...of for…of 是 ES6 新增的方法，但是 for…of 不能去遍历普通的对象，**for…of 的好处是可以使用 break 跳出循环。**
 
@@ -428,7 +454,8 @@ every / some
 返回一个布尔值。当我们需要判定数组中的元素是否满足某些条件时，可以使用 every / some。这两个的区别是，every 会去判断判断数组中的每一项，而 some 则是当某一项满足条件时返回。 不会改变原数组
 **every**
 
-<!-- const foo = [5,1,3,7,4].every((item, index) => {
+```js
+ const foo = [5,1,3,7,4].every((item, index) => {
     console.log(`索引：${index}，数值：${item}`)
     return item > 2
 })
@@ -436,7 +463,8 @@ console.log(foo)
  every 打印：
  索引：0，数值：5
  索引：1，数值：1
- false -->
+ false
+```
 
 **some**
 todo
@@ -460,7 +488,9 @@ filter 方法用于过滤数组成员，满足条件的成员组成一个新数�
 它的参数是一个函数，所有数组成员依次执行该函数，返回结果为 true 的成员组成一个新数组返回。
 
   <!-- !该方法不会改变原数组。 -->
-  <!-- const foo = [5,1,3,7,4].filter((item,index) => {
+
+```js
+const foo = [5,1,3,7,4].filter((item,index) => {
     console.log(`索引：${index}，数值：${item}`)
     return item > 2
   })
@@ -471,13 +501,15 @@ filter 方法用于过滤数组成员，满足条件的成员组成一个新数�
     索引：2，数值：3
     索引：3，数值：7
     索引：4，数值：4
-    [5, 3, 7, 4] -->
+    [5, 3, 7, 4]
+```
 
 map()
 map 即是 “映射”的意思 ，原数组被“映射”成对应新数组。 ==>拷贝\_映射
 map：支持 return，相当与原数组克隆了一份，把克隆的每项改变了，也不影响原数组。
 
-<!-- const foo = [5,1,3,7,4].map((item,index) => {
+```js
+const foo = [5,1,3,7,4].map((item,index) => {
     console.log(`索引：${index}，数值：${item}`)
     return item + 2
 })
@@ -488,12 +520,14 @@ console.log(foo)
   索引：2，数值：3
   索引：3，数值：7
   索引：4，数值：4
-  [7, 3, 5, 9, 6] -->
+  [7, 3, 5, 9, 6]
+```
 
 reduce() / reduceRight() 累加器
 reduce 从左到右将数组元素做“叠加”处理，返回一个值。reduceRight 从右到左。 不会改变原数组
 
-  <!-- const foo = [5,1,3,7,4].reduce((total, cur) => {
+```js
+const foo = [5,1,3,7,4].reduce((total, cur) => {
     console.log(`叠加：${total}，当前：${cur}`)
     return total + cur
 })
@@ -503,18 +537,21 @@ console.log(foo)
   叠加：6，当前：3
   叠加：9，当前：7
   叠加：16，当前：4
-  20 -->
+  20
+```
 
 Object,keys 遍历对象的属性
 Object.keys 方法的参数是一个对象，返回一个数组。该数组的成员都是该对象自身的（而不是继承的）所有属性名，且只返回可枚举的属性。
 <https://titangene.github.io/article/javascript-object-keys-values-entries.html>
 <https://zh.javascript.info/keys-values-entries>
 
-  <!-- const obj = {
+```js
+const obj = {
   p1: 123,
-  p2: 456
+  p2: 456,
 };
-Object.keys(obj) ["p1", "p2"] -->
+Object.keys(obj)[("p1", "p2")];
+```
 
 Object.values(obj)
 Object.entries(obj)
@@ -522,9 +559,11 @@ Object.entries(obj)
 Object.getOwnPropertyNames() 遍历对象的属性
 Object.getOwnPropertyNames 方法与 Object.keys 类似，也是接受一个对象作为参数，返回一个数组，包含了该对象自身的所有属性名。但它能返回不可枚举的属性。
 
-<!-- const arr = ['Hello', 'World'];
-Object.keys(arr) // ["0", "1"]
-Object.getOwnPropertyNames(arr) // ["0", "1", "length"] -->
+```js
+const arr = ["Hello", "World"];
+Object.keys(arr); // ["0", "1"]
+Object.getOwnPropertyNames(arr); // ["0", "1", "length"]
+```
 
 一：map()，forEach()，filter()循环的共同之处：
 1.forEach，map，filter 循环中途是无法停止的，总是会将所有成员遍历完。 2.他们都可以接受第二个参数，用来绑定回调函数内部的 this 变量，将回调函数内部的 this 对象，指向第二个参数，间接操作这个参数（一般是数组）。
@@ -727,6 +766,7 @@ CSS_grid 布局
 2、伪类用于表示 DOM 元素的一种状态，比如 :hover、:visited、:checked 等，CSS 中差不多有 30+ 种伪类。伪元素用于选择 DOM 元素的一部分，比如 ::first-letter、::first-line、::before、::after 等，CSS 中目前有 17 个伪元素。
 **css 伪类**
 
+```css
 - :active
 - ::after/:after
 - ::backdrop (experimental)
@@ -771,6 +811,7 @@ CSS_grid 布局
 - :valid
 - :visited
 - Bonus content: A Sass mixin for links
+```
 
 1. :link
    :link 伪类表示链接的正常状态，选择那些尚未被点过的链接。建议在其他链接相关的伪类之前声明:link，它们的顺序为：:link、:visited、:hover、:active。
@@ -802,8 +843,8 @@ background: orange;
 <https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties>
 声明一个 css 变量，属性名需要以两个减号（--）开始，属性值则可以是任何有效的 CSS 值。和其他属性一样，自定义属性也是写在规则集之内的，如下：
 
-<!-- :root 根伪类 -->
-
+```css
+/* :root 根伪类  */
 :root {
 --main-bg-color: brown;
 }
@@ -819,6 +860,8 @@ display: inline-block;
 .two {
 color: var(--my-var, red); /_Red if --my-var is not defined_/
 }
+```
+
 **获取一个 Dom 节点上的 CSS 变量**
 element.style.getPropertyValue("--my-var");
 
@@ -845,6 +888,7 @@ redux useReducer
 <!--? 新增 useEvent -->
 
 **useEffect 和 useState**
+<https://juejin.cn/post/6906007507531038727>
 
 <!-- todo -->
  <!-- usestate 默认值在组件创建时生效
@@ -1038,11 +1082,12 @@ for of -->遍历 数据的可迭代属性(value)
 
 <https://zh.javascript.info/iterable>
 
-const languages = ['JavaScript', 'Python', 'Go']
+```js
+const languages = ["JavaScript", "Python", "Go"];
 
 // 与 for...in 循环一起使用
 for (const language in languages) {
-console.log(language)
+  console.log(language);
 }
 // output
 // 0
@@ -1051,9 +1096,10 @@ console.log(language)
 
 // 与 for...of 循环一起使用
 for (const language of languages) {
-console.log(language)
+  console.log(language);
 }
 // output -> JavaScript Python Go
+```
 
 # lodash 源码解析
 
