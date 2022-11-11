@@ -88,6 +88,8 @@ Promise.race([]).then().catch() race()接受参数与 all 相同 返回最先执
 非空断言操作符会从变量中移除 undefined 和 null。只需在变量后面添加一个 ! 即可。忽略变量的 undefined | null;类似可选链操作
 **手写 promise**
 <https://blog.csdn.net/m0_52409770/article/details/123446776>
+<https://juejin.cn/post/6994594642280857630>
+<https://juejin.cn/post/6886360224308035598>
 
 **如何优雅的中断 promise 请求===如何终端一个 fetch 请求**
 xhr 终端一个请求 xhr 可使用其内置方法 abort 进行终止操作，但是 abort（中止）方法的执行过程不可控
@@ -740,6 +742,8 @@ uselayoutefft and useeffect
 # 防抖和节流 throttle（节流）与 debounce（防抖）
 
 <https://www.cnblogs.com/dreamsqin/p/11305028.html>
+**异步校验 防抖 debounce返回promise 符合antd validator校验要求返回格式**
+<https://www.jianshu.com/p/9573703dfe78>
 
 # CSS
 

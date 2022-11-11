@@ -10,3 +10,8 @@
 十月：October -Oct.
 十一月：November -Nov.
 十二月：December -Dec.
+
+
+
+税金 默认 1
+缩率 默认 0.83
