@@ -76,6 +76,10 @@ animation: 3s slidein;
 
 # Promise
 
+**微任务 宏任务**
+同步执行->微任务->宏任务
+按照函数层级执行，每一个层级宏任务，微任务互相对应  按照层级执行
+<https://juejin.cn/post/6920239138893627406>
 <!-- 2022_4_27 -->
 
 **Promise.resolve()与 new Promise(r => r(v))**
@@ -86,6 +90,11 @@ Promise.all([]).then().catch() all 仅接受 promise 数组 数组所有 promise
 Promise.race([]).then().catch() race()接受参数与 all 相同 返回最先执行完毕返回结果的 promise 不管成功或者失败
 非空断言符
 非空断言操作符会从变量中移除 undefined 和 null。只需在变量后面添加一个 ! 即可。忽略变量的 undefined | null;类似可选链操作
+**async await**
+async 函数是 Generator 函数的语法糖。使用 关键字 async 来表示，在函数内部使用 await 来表示异步。
+接受一个promise函数 只有成功resolve的结果在会被await接受到
+<https://juejin.cn/post/6844903621360943118>
+
 **手写 promise**
 <https://blog.csdn.net/m0_52409770/article/details/123446776>
 <https://juejin.cn/post/6994594642280857630>
@@ -1192,3 +1201,14 @@ jest.js
 # antd ui 库源码分析
 
 <https://juejin.cn/post/7066420918708338702>
+
+# form组件封装
+
+formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可修改为失焦等)|value:组件受控值
+
+- 受控组件
+由react组件接管组件的值存储 存在 usestate或者form中 通过 value进行写入
+- 非受控组件
+由 Input等组件底层控制 通过 使用 ref从DOM获取表单值
+<https://juejin.cn/post/7075673541751865357>
+<https://zh-hans.reactjs.org/docs/uncontrolled-components.html#gatsby-focus-wrapper>
