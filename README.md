@@ -24,6 +24,8 @@ a! ==>非空断言操作符 断言变量 a 为非 null 和 undefined，躲过类
 
 <!-- const sayHello = (name: string | undefined) => { /_ ... _/ }; -->
 
+[15 种 TypeScript 最常用的实用程序类型](https://mp.weixin.qq.com/s/D9VSdIDs3j67t7CzdxvLuw)
+
 **Omit Partial Readonly**
 Omit<type/interface,key > 干掉类型中个别 key;
 
@@ -43,6 +45,26 @@ todo
 
 **interface AND type**
 常规用法
+
+## 什么时候推荐用 type 什么时候用 interface ？
+
+推荐任何时候都是用 type， type 使用起来更像一个变量，与 interface 相比，type 的特点如下：
+
+表达功能更强大，不局限于 object/class/function
+要扩展已有 type 需要创建新 type，不可以重名
+支持更复杂的类型操作
+基本上所有用 interface 表达的类型都有其等价的 type 表达。在实践的过程中，我们也发现了一种类型只能用 interface 表达，无法用 type 表达，那就是往函数上挂载属性。
+
+```ts
+interface FuncWithAttachment {
+  (param: string): boolean;
+  someProperty: number;
+}
+
+const testFunc: FuncWithAttachment = {};
+const result = testFunc("mike"); // 有类型提醒
+testFunc.someProperty = 3; // 有类型提醒
+```
 
 - type 用于定义数据结构
 - interface 用于定义组件接口
@@ -76,10 +98,12 @@ animation: 3s slidein;
 
 # Promise
 
-**微任务 宏任务**
+**EventLoop 和 微任务 宏任务**
 同步执行->微任务->宏任务
-按照函数层级执行，每一个层级宏任务，微任务互相对应  按照层级执行
+按照函数层级执行，每一个层级宏任务，微任务互相对应 按照层级执行
+<https://juejin.cn/post/7073099307510923295>
 <https://juejin.cn/post/6920239138893627406>
+
 <!-- 2022_4_27 -->
 
 **Promise.resolve()与 new Promise(r => r(v))**
@@ -92,7 +116,7 @@ Promise.race([]).then().catch() race()接受参数与 all 相同 返回最先执
 非空断言操作符会从变量中移除 undefined 和 null。只需在变量后面添加一个 ! 即可。忽略变量的 undefined | null;类似可选链操作
 **async await**
 async 函数是 Generator 函数的语法糖。使用 关键字 async 来表示，在函数内部使用 await 来表示异步。
-接受一个promise函数 只有成功resolve的结果在会被await接受到
+接受一个 promise 函数 只有成功 resolve 的结果在会被 await 接受到
 <https://juejin.cn/post/6844903621360943118>
 
 **手写 promise**
@@ -100,7 +124,8 @@ async 函数是 Generator 函数的语法糖。使用 关键字 async 来表示�
 <https://juejin.cn/post/6994594642280857630>
 <https://juejin.cn/post/6886360224308035598>
 
-**如何优雅的中断 promise 请求===如何终端一个 fetch 请求**
+## 如何优雅的中断 promise 请求===如何终端一个 fetch 请求
+
 xhr 终端一个请求 xhr 可使用其内置方法 abort 进行终止操作，但是 abort（中止）方法的执行过程不可控
 fetch 如何中止
 
@@ -751,7 +776,7 @@ uselayoutefft and useeffect
 # 防抖和节流 throttle（节流）与 debounce（防抖）
 
 <https://www.cnblogs.com/dreamsqin/p/11305028.html>
-**异步校验 防抖 debounce返回promise 符合antd validator校验要求返回格式**
+**异步校验 防抖 debounce 返回 promise 符合 antd validator 校验要求返回格式**
 <https://www.jianshu.com/p/9573703dfe78>
 
 # CSS
@@ -1197,18 +1222,41 @@ jest.js
   <https://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html>
 - this this 指向作用域的所有者 函数中只想函数作用域的所有者（父级对象）
   <https://www.quirksmode.org/js/this.html>
+  react 闭包 和 addEventListner 闭包
+  <https://zhuanlan.zhihu.com/p/514151293>
 
 # antd ui 库源码分析
 
 <https://juejin.cn/post/7066420918708338702>
 
-# form组件封装
+# form 组件封装
 
 formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可修改为失焦等)|value:组件受控值
 
 - 受控组件
-由react组件接管组件的值存储 存在 usestate或者form中 通过 value进行写入
+  由 react 组件接管组件的值存储 存在 usestate 或者 form 中 通过 value 进行写入
 - 非受控组件
-由 Input等组件底层控制 通过 使用 ref从DOM获取表单值
-<https://juejin.cn/post/7075673541751865357>
-<https://zh-hans.reactjs.org/docs/uncontrolled-components.html#gatsby-focus-wrapper>
+  由 Input 等组件底层控制 通过 使用 ref 从 DOM 获取表单值
+  <https://juejin.cn/post/7075673541751865357>
+  <https://zh-hans.reactjs.org/docs/uncontrolled-components.html#gatsby-focus-wrapper>
+
+# Electron
+
+- 基于 umi 搭建 electron
+  <https://zhuanlan.zhihu.com/p/376082990>
+- Electron + React + Antd
+  <https://blog.csdn.net/weixin_44043810/article/details/118554069>
+- Electron+Antd 创建并打包本地应用程序
+  <https://blog.csdn.net/warpten2525/article/details/111556193>
+- electron remote 详解 组件通信
+  Electron 中的两种进程通信方式，分别为：
+
+1. 使用 ipcMain 和 ipcRenderer 两个模块
+2. 使用 remote 模块 // 渲染进程（web 页面）和主进程通信（IPC）提供了一种简单方法。
+   <https://cloud.tencent.com/developer/article/2034372>
+
+# Chrome Devtools
+
+<https://mp.weixin.qq.com/s/3wjFs--CuIBkXsnyKRkAJQ>
+
+#
