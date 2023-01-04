@@ -629,6 +629,8 @@ reduce 是从左到右处理（从第一个成员到最后一个成员），redu
 
 <https://leetcode-solution-leetcode-pp.gitbook.io/leetcode-solution/thinkings/linked-list>
 
+<https://juejin.cn/post/7146975493278367752>
+
 <!-- 补充： -->
 
 uselayoutefft and useeffect
@@ -923,6 +925,18 @@ redux useReducer
 引用 useRef-->useImperativeHandle
 自定义 hook
 
+## flushSync
+
+- 立即强制刷新组件树
+  <https://stackoverflow.com/questions/62725935/what-does-flushsync-do-in-react>
+  <https://juejin.cn/post/7117512204059934733>
+
+```tsx
+flushSync(() => {
+  setMessages((m) => [...m, message]);
+});
+```
+
 <!--? 新增 useEvent -->
 
 **useEffect 和 useState**
@@ -944,11 +958,18 @@ react 18 Automatic batching 使用 setState 来进行 dispatch 组件 State 变�
 深层次比较 是跨渲染周期缓存数据。缓存上一次渲染的数据，并调用深比较方法判断，如果两个对象相等则返回上一次的数据，地址自然也没有变化。
 **useImperativeHandle 和 forwardRef**
 建议 useImperativeHandle 和 forwardRef 同时使用，减少暴露给父组件的属性
+
 forwardref 与泛型组件搭配使用-->
+```tsx
+useImperativeHandle(ref, createHandle, [deps])
+// ref：定义 current 对象的 ref；
 
-<!-- react.forwardRef 高阶组件包裹的组件无法传递泛型参数 -->
+// createHandle：一个函数，返回值是一个对象，即这个 ref 的 current 对象；
 
-<https://juejin.cn/post/7081460215085793310>
+// deps：即依赖列表，当监听的依赖发生变化，useImperativeHandle 才会重新将子组件的实例属性输出到父组件 ref 的 current 属性上，如果为空数组，则不会重新输出。
+```
+
+['react.forwardRef高阶组件包裹的组件无法传递泛型参数']<https://juejin.cn/post/7081460215085793310>
 
 <https://fettblog.eu/typescript-react-generic-forward-refs/>
 **useEffect 和 useLayoutEffect**
@@ -1001,14 +1022,35 @@ useContext createContext 创建数据变量，子组件通过 useContext 导入
 
 <https://segmentfault.com/a/1190000039200472>
 
+## React Filber 时间切片详解
+
+<https://juejin.cn/post/6844903975112671239>
+
 **react 自定义 hooks**
 todo
 <https://juejin.cn/post/6844904074433789959#heading-5>
 
 # React Hook 重复渲染问题处理：useMemo, memo, useCallback
 
-为什么会存在重复渲染？
-**这是因为 react hook 使用的是函数组件，父组件的任何一次修改，都会导致子组件的函数执行，从而重新进行渲染**
+## 为什么会存在重复渲染？
+
+这是因为 react hook 使用的是函数组件，父组件的任何一次修改，都会导致子组件的函数执行，从而重新进行渲染
+
+## 什么时候需要使用 memo callback 做性能优化？
+
+- 复杂的计算值用 useMemo 缓存
+- 当值作为别的 hooks 的依赖时
+- 需要作为被 memo 的子组件的 props 时
+
+## 优化使用建议 <https://juejin.cn/post/7056227726570553375>
+
+## React 性能优化的方向<https://juejin.cn/post/6844903865926549511>
+
+- 不使用 useCallback 会造成每次渲染时函数的重建
+- 不使用 useMemo 和 useCallback 会造成 React.memo 失效
+- 不使用 useCallback 则 useEffect 无法依赖 回调函数
+- React.memo 类似 PureComponent 能用就用
+- useMemo 做复杂推导时必用，简单计算用了也不会错。
 
 1. 父组件没有 props 传入子组件 props --- 使用 React.memo 即可
    先简单介绍一下这个方法：
@@ -1255,8 +1297,12 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 2. 使用 remote 模块 // 渲染进程（web 页面）和主进程通信（IPC）提供了一种简单方法。
    <https://cloud.tencent.com/developer/article/2034372>
 
+- ['electron开发经验']<https://juejin.cn/post/6844904029231775758>
+
 # Chrome Devtools
 
 <https://mp.weixin.qq.com/s/3wjFs--CuIBkXsnyKRkAJQ>
 
-#
+# UMI Plugins 插件开发
+
+<https://github.com/frontend9/fe9-library/issues/50>
