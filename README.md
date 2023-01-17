@@ -925,6 +925,24 @@ redux useReducer
 引用 useRef-->useImperativeHandle
 自定义 hook
 
+## cloneElement
+
+React.cloneElement()接收三个参数。第一个参数接收一个ReactElement，可以是 真实的dom结构 也可以是 自定义的。
+。第二个参数为props、key、refs，可以注入props，第三个是props.children
+**相关文章**
+
+- <https://juejin.cn/post/7037363057839833124>
+
+```jsx
+function CloneDemo(props){
+  return React.cloneElement(<div/>,props,<p>这是参数传入的元素</p>)
+}
+function ContainerBox(){
+  return <CloneDemo><h1>这是在父组件添加的元素</h1></CloneDemo>
+}
+export default ContainerBox;
+```
+
 ## flushSync
 
 - 立即强制刷新组件树
@@ -1088,6 +1106,10 @@ click-to-component
 
 react-page-transition
 <https://mp.weixin.qq.com/s/9NFB1uNqNWiARbmUdWrBWQ>
+
+# webpack
+
+['wepack设计理念详解']<https://juejin.cn/post/7170852747749621791>
 
 # 打包工具 vite esbuild
 
@@ -1306,3 +1328,42 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 # UMI Plugins 插件开发
 
 <https://github.com/frontend9/fe9-library/issues/50>
+
+# react-jsx-parser jsx解析插件
+
+<https://github.com/TroyAlford/react-jsx-parser#readme>
+
+```jsx
+import React from 'react'
+import JsxParser from 'react-jsx-parser'
+import Library from 'some-library-of-components'
+
+class InjectableComponent extends Component {
+  static defaultProps = {
+    eventHandler: () => {}
+  }
+  // ... inner workings of InjectableComponent
+}
+
+
+/**
+ * @bindings  注入变量  任何可复制变量的参数//可传函数
+ * @components  注入jsx组件
+ * @jsx   解析目标主体内容   可写简单的箭头函数  有一些限制 不可写函数体，具名函数等
+ */
+const MyComponent = () => (
+  <JsxParser
+    bindings={{
+      foo: 'bar',
+      myEventHandler: () => { /* ... do stuff ... */ },
+    }}
+    components={{ InjectableComponent, Library }}
+    jsx={`
+      <h1>Header</h1>
+      <InjectableComponent eventHandler={myEventHandler} truthyProp />
+      <Library.SomeComponent someProp={foo} calc={1 + 1} stringProp="foo" />
+      <Library.DataFetcher>((data) => <div>{data.name}</div>)</Library.DataFetcher>
+    `}
+  />
+)
+```
