@@ -3,8 +3,9 @@
  * @Date: 2022-04-22 13:14:33
  * @Description: 开发笔记
 -->
+# 开发笔记
 
-# Typescript
+## Typescript
 
 **ts 逻辑运算符 & | ?? ?. !**
 
@@ -46,7 +47,7 @@ todo
 **interface AND type**
 常规用法
 
-## 什么时候推荐用 type 什么时候用 interface ？
+### 什么时候推荐用 type 什么时候用 interface ？
 
 推荐任何时候都是用 type， type 使用起来更像一个变量，与 interface 相比，type 的特点如下：
 
@@ -77,7 +78,7 @@ interface Type {
 type ChildType = Type["name"];
 ```
 
-# animation
+## animation
 
 <!-- 2022_4_24 -->
 
@@ -96,7 +97,7 @@ animation: 3s linear 1s slidein;
 
 animation: 3s slidein;
 
-# Promise
+## Promise
 
 **EventLoop 和 微任务 宏任务**
 同步执行->微任务->宏任务
@@ -124,7 +125,7 @@ async 函数是 Generator 函数的语法糖。使用 关键字 async 来表示�
 <https://juejin.cn/post/6994594642280857630>
 <https://juejin.cn/post/6886360224308035598>
 
-## 如何优雅的中断 promise 请求===如何终端一个 fetch 请求
+### 如何优雅的中断 promise 请求===如何终端一个 fetch 请求
 
 xhr 终端一个请求 xhr 可使用其内置方法 abort 进行终止操作，但是 abort（中止）方法的执行过程不可控
 fetch 如何中止
@@ -180,7 +181,26 @@ tip:dom 机制规范 nodejs 环境下均可使用该方法
 
 css 全局作用域(:global)和局部作用域（:local） css 默认局部作用域(:local) 全局作用域可跳过 webpack 打包 css_module 化 作用于其他组件
 
-# unit32Array 获取随机 key
+## class 类
+
+### 概念
+
+class 本质上是一个构造函数的语法糖，其底层实际上是通过 构造函数 去创建的。所以它的绝大部分功能，ES5 都可以做到。新的 class 写法只是让对象原型的写法更加清晰、更像面向对象编程的语法而已
+
+- this 关键字 代表实例对象
+- 类的所有方法都定义在类的prototype属性上面。
+- 静态方法：在方法前加static，表示该方法不会被实例继承，而是直接通过类来调用。
+- 静态属性：在属性前加static，指的是 Class 本身的属性，而不是定义在实例对象（this）上的属性。
+- constructor 代表构造方法 接受实例化时的传参  
+`tip：constructor 方法是类的默认方法，通过 new 命令生成对象实例时，自动调用该方法。一个类必须有 constructor 方法，如果没有显式定义，一个空的 constructor 方法会被默认添加。`
+
+- 类的 type 为 function，类本身指向构造函数
+- static 静态方法
+`tip:类相当于实例的原型，所有在类中定义的方法，都会被实例继承。 如果在一个方法前，加上 static 关键字，就表示该方法不会被实例继承，而是直接通过类来调用，这就称为"静态方法"。`
+
+  [详解 es6 中的 class](https://juejin.cn/post/6844904086089760775)
+
+## unit32Array 获取随机 key
 
 <!-- 2022_4_29  -->
 
@@ -194,14 +214,14 @@ function getUuid() {
 }
 ```
 
-# 事件行为 stopImmediatePropagation()
+## 事件行为 stopImmediatePropagation()
 
 <!-- 2022_5_5 -->
 <!-- event.stopImmediatePropagation -->
 
 如果多个事件监听器被附加到相同元素的相同事件类型上，当此事件触发时，它们会按其被添加的顺序被调用。如果在其中一个事件监听器中执行 stopImmediatePropagation() ，那么剩下的事件监听器都不会被调用。
 
-# 字符串操作方法
+## 字符串操作方法
 
 <!-- todo 字符串常用方法 -->
 
@@ -296,7 +316,7 @@ toLowerCase 把字母转换成小写，toUpperCase()则是把字母转换成大�
 10.includes(), startsWith(), endsWith()
 includes、startsWith、endsWith，es6 的新增方法，includes 用来检测目标字符串对象是否包含某个字符，返回一个布尔值，startsWith 用来检测当前字符是否是目标字符串的起始部分，相对的 endwith 是用来检测是否是目标字符串的结尾部分。
 
-# 对象操作方法
+## 对象操作方法
 
 - **hasOwnProperty** hasOwnProperty() 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键）。
 
@@ -310,7 +330,7 @@ console.log(object1.hasOwnProperty("property1"));
 
 **enteries/keys/values** 指定对象的迭代器 tip：如何遍历对象
 
-# 数组操作方法
+## 数组操作方法
 
 <!-- todo 数组常用方法 -->
 
@@ -410,7 +430,7 @@ const array = Array(6).fill(""); // ['', '', '', '', '', '']
 Array(6).fill(); //[undefined, undefined, undefined, undefined, undefined, undefined]
 ```
 
-# 数组循环方法
+## 数组循环方法
 
 **break,continue,return**
 continue -> 在循环体中跳出本次迭代 进行下一轮迭代
@@ -619,7 +639,7 @@ reduce 是从左到右处理（从第一个成员到最后一个成员），redu
 他们都是遍历对象的属性，也是接受一个对象作为参数，返回一个数组，包含了该对象自身的所有属性名。但 Object.keys 不能返回不可枚举的属性；Object.getOwnPropertyNames 能返回不可枚举的属性。
 复制代码
 
-# 算法注解
+## 算法注解
 
 <!-- 刷算法题必备的数学考点汇总 -->
 
@@ -636,7 +656,7 @@ reduce 是从左到右处理（从第一个成员到最后一个成员），redu
 uselayoutefft and useeffect
 <https://zhuanlan.zhihu.com/p/348701319>
 
-# 树形结构解析
+## 树形结构解析
 
 ```js
 (function (window, undefined) {
@@ -775,13 +795,13 @@ uselayoutefft and useeffect
 
 链接：<https://juejin.cn/post/6844903986823200776>
 
-# 防抖和节流 throttle（节流）与 debounce（防抖）
+## 防抖和节流 throttle（节流）与 debounce（防抖）
 
 <https://www.cnblogs.com/dreamsqin/p/11305028.html>
 **异步校验 防抖 debounce 返回 promise 符合 antd validator 校验要求返回格式**
 <https://www.jianshu.com/p/9573703dfe78>
 
-# CSS
+## CSS
 
 **grid 布局**
 calc 计算
@@ -914,36 +934,40 @@ element.style.setProperty("--my-var", jsVar + 4);
 **css 瀑布流**
 <https://juejin.cn/post/7014650146000470053>
 
-# REACT HOOKS 总结
+## REACT HOOKS 总结
 
 **2022_5_12**
 状态 usestate
-redux useReducer
+redux useReducer usestate的替代方案  处理复杂state逻辑时useReducer更可取
 副作用 useEffect-->uselayoutEffect ->react 函数式组件的函数体中，网络请求，模块订阅以及 DOM 操作都属与 _副作用_
-上下文 useContext
+上下文 useContext  将状态和修改状态的方法在组件树顶部透传  在其子组件中 直接调用 避免多次嵌套组件层层传递
 记忆 useMemo-->useCallback
 引用 useRef-->useImperativeHandle
 自定义 hook
 
-## cloneElement
+[简易redux =usecontext+useReducer](https://juejin.cn/post/6995105000523317278)
 
-React.cloneElement()接收三个参数。第一个参数接收一个ReactElement，可以是 真实的dom结构 也可以是 自定义的。
-。第二个参数为props、key、refs，可以注入props，第三个是props.children
-**相关文章**
+### cloneElement
 
-- <https://juejin.cn/post/7037363057839833124>
+React.cloneElement()接收三个参数。第一个参数接收一个 ReactElement，可以是 真实的 dom 结构 也可以是 自定义的。
+。第二个参数为 props、key、refs，可以注入 props，第三个是 props.children
+**相关文章** (<https://juejin.cn/post/7037363057839833124>)
 
 ```jsx
-function CloneDemo(props){
-  return React.cloneElement(<div/>,props,<p>这是参数传入的元素</p>)
+function CloneDemo(props) {
+  return React.cloneElement(<div />, props, <p>这是参数传入的元素</p>);
 }
-function ContainerBox(){
-  return <CloneDemo><h1>这是在父组件添加的元素</h1></CloneDemo>
+function ContainerBox() {
+  return (
+    <CloneDemo>
+      <h1>这是在父组件添加的元素</h1>
+    </CloneDemo>
+  );
 }
 export default ContainerBox;
 ```
 
-## flushSync
+### flushSync
 
 - 立即强制刷新组件树
   <https://stackoverflow.com/questions/62725935/what-does-flushsync-do-in-react>
@@ -978,8 +1002,9 @@ react 18 Automatic batching 使用 setState 来进行 dispatch 组件 State 变�
 建议 useImperativeHandle 和 forwardRef 同时使用，减少暴露给父组件的属性
 
 forwardref 与泛型组件搭配使用-->
+
 ```tsx
-useImperativeHandle(ref, createHandle, [deps])
+useImperativeHandle(ref, createHandle, [deps]);
 // ref：定义 current 对象的 ref；
 
 // createHandle：一个函数，返回值是一个对象，即这个 ref 的 current 对象；
@@ -987,7 +1012,7 @@ useImperativeHandle(ref, createHandle, [deps])
 // deps：即依赖列表，当监听的依赖发生变化，useImperativeHandle 才会重新将子组件的实例属性输出到父组件 ref 的 current 属性上，如果为空数组，则不会重新输出。
 ```
 
-['react.forwardRef高阶组件包裹的组件无法传递泛型参数']<https://juejin.cn/post/7081460215085793310>
+['react.forwardRef 高阶组件包裹的组件无法传递泛型参数']<https://juejin.cn/post/7081460215085793310>
 
 <https://fettblog.eu/typescript-react-generic-forward-refs/>
 **useEffect 和 useLayoutEffect**
@@ -1040,7 +1065,7 @@ useContext createContext 创建数据变量，子组件通过 useContext 导入
 
 <https://segmentfault.com/a/1190000039200472>
 
-## React Filber 时间切片详解
+### React Filber 时间切片详解
 
 <https://juejin.cn/post/6844903975112671239>
 
@@ -1048,21 +1073,21 @@ useContext createContext 创建数据变量，子组件通过 useContext 导入
 todo
 <https://juejin.cn/post/6844904074433789959#heading-5>
 
-# React Hook 重复渲染问题处理：useMemo, memo, useCallback
+## React Hook 重复渲染问题处理：useMemo, memo, useCallback
 
-## 为什么会存在重复渲染？
+### 为什么会存在重复渲染？
 
 这是因为 react hook 使用的是函数组件，父组件的任何一次修改，都会导致子组件的函数执行，从而重新进行渲染
 
-## 什么时候需要使用 memo callback 做性能优化？
+### 什么时候需要使用 memo callback 做性能优化？
 
 - 复杂的计算值用 useMemo 缓存
 - 当值作为别的 hooks 的依赖时
 - 需要作为被 memo 的子组件的 props 时
 
-## 优化使用建议 <https://juejin.cn/post/7056227726570553375>
+### 优化使用建议 <https://juejin.cn/post/7056227726570553375>
 
-## React 性能优化的方向<https://juejin.cn/post/6844903865926549511>
+### React 性能优化的方向<https://juejin.cn/post/6844903865926549511>
 
 - 不使用 useCallback 会造成每次渲染时函数的重建
 - 不使用 useMemo 和 useCallback 会造成 React.memo 失效
@@ -1082,7 +1107,27 @@ todo
 3. 父组件传入子组件的 props 存在复杂数据类型 --- 使用 memo, useMemo, useCallback
    我们通过 props 向子组件传值时，可能需要传入复杂类型如 object，以及 function 类型的值。而 memo 子组件进行渲染比对时进行的是浅比较，即使我们传入相同的 object 或 function，子组件也会认为传入参数存在修改，从而子组件重新进行渲染。这个时候仅仅使用 memo 包裹子组件应该没办法解决问题了，是时候用上我们的 useCallback 以及 useMemo 了。
 
-# File、Blob、ArrayBuffer 等文件类的对象有什么区别和联系
+## React 鼠标事件合集
+
+- 触摸事件：onTouchCancel\onTouchEnd\onTouchMove\onTouchStart (只会在移动设备上接受)
+
+- 键盘事件：onKeyDown\onKeyPress\onKeyUp
+
+- 剪切事件：onCopy\onCut\onPaste
+
+- 焦点事件：onFocus\onBlur
+
+- UI 元素：onScroll (移动设备是手指滚动和 PC 的鼠标滑动)
+
+- 滚动事件：onWheel (鼠标滚轮)
+
+- 鼠标类型:onClick\onContextMenu (右键)\onDoubleClick\onMouseDown\onMouseEnter\
+
+  onMouseLeave\onMouseMove\onMouseOut\onMouseOver\onMouseUp
+
+  onDrag\onDrop\onDragEnd\onDragEnter\onDragExit\onDragLeave\onDragOver\onDragStart
+
+## File、Blob、ArrayBuffer 等文件类的对象有什么区别和联系
 
 Blob 是一种二进制对象(包括字符，文件等等)，es6 对其进行了补充
 File 是基于 Blob 的一种二进制文件对象,扩展了 Blob，es6 同样进行了补充
@@ -1092,11 +1137,11 @@ Buffer 是 Nodejs 内置的二进制缓冲区，Buffer 相当于 ES6 中 Uint8Ar
 除非您需要编写/编辑的能力（使用 ArrayBuffer），否则 Blob 格式可能是最好的。
 <https://nibes.cn/blog/21263>
 
-# 正则表达式使用指南
+## 正则表达式使用指南
 
 <https://mp.weixin.qq.com/s/gTSdWDew1-JPsssFd_gkug>
 
-# react 开发工具类
+## react 开发工具类
 
 <!-- 组件跳转 -->
 
@@ -1107,11 +1152,19 @@ click-to-component
 react-page-transition
 <https://mp.weixin.qq.com/s/9NFB1uNqNWiARbmUdWrBWQ>
 
-# webpack
+## webpack
 
-['wepack设计理念详解']<https://juejin.cn/post/7170852747749621791>
+- Entry：指定 webpack 开始构建的入口模块，从该模块开始构建并计算出直接或间接依赖的模块或者库
+- Output：告诉 webpack 如何命名输出的文件以及输出的目录
+- Loaders：由于 webpack 只能处理 javascript，所以我们需要对一些非 js 文件处理成 webpack 能够处理的模块，比如 sass 文件
+- Plugins：Loaders 将各类型的文件处理成 webpack 能够处理的模块，plugins 有着很强的能力。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量。但也是最复杂的一个。比如对 js 文件进行压缩优化的 UglifyJsPlugin 插件
+- Chunk：coding split 的产物，我们可以对一些代码打包成一个单独的 chunk，比如某些公共模块，去重，更好的利用缓存。或者按需加载某些功能模块，优化加载时间。在 webpack3 及以前我们都利用 CommonsChunkPlugin 将一些公共代码分割成一个 chunk，实现单独加载。在 webpack4 中 CommonsChunkPlugin 被废弃，使用 SplitChunksPlugin
 
-# 打包工具 vite esbuild
+['webpack 详解-腾讯'](https://juejin.cn/post/6844903573675835400)
+
+['从零实现一个 webpack'](https://juejin.cn/post/7170852747749621791)
+
+## 打包工具 vite esbuild
 
 **esbuild**
 基于 go 开发 作用：
@@ -1129,11 +1182,11 @@ Vite，一个基于浏览器原生 ES imports 的开发服务器。利用浏览�
 即时热模块更换（HMR）
 真正的按需编译
 
-# Jenkins 部署
+## Jenkins 部署
 
 <https://juejin.cn/post/7102360505313918983>
 
-# Set Map WeakSet WeakMap
+## Set Map WeakSet WeakMap
 
 _ES6 新增_
 **set**
@@ -1141,7 +1194,7 @@ _ES6 新增_
 set 本身是一个构造函数，用来生成 set 数据结构
 可用作数组去重 [... new set(array)]
 
-# 枚举和迭代
+## 枚举和迭代
 
 **可枚举的属性**
 可枚举对象的一个定义特征是，当我们通过赋值运算符将属性赋值给对象时，js 将内部可枚举标志（enumerable）设置为 true。这是默认值。但是，我们可以通过将其设置为 false 来更改此行为。
@@ -1203,12 +1256,12 @@ for (const language of languages) {
 // output -> JavaScript Python Go
 ```
 
-# lodash 源码解析
+## lodash 源码解析
 
 **假值:例如 false, null,0, "", undefined, 和 NaN 都是被认为是“假值==false”。**
 if(value) 可以判断是否为假值 value 会被隐式性转换为 true 或 false
 
-# Git
+## Git
 
 **submodule**
 git submodule update 更新子模块 默认 submodule 的 HEAD 处于游离分支
@@ -1218,7 +1271,7 @@ git submodule update 更新子模块 默认 submodule 的 HEAD 处于游离分�
 git clone -b 想要拉取的分支名(branch) xxx(URL) 文件名(省略为原名)
 -b 为 --branch 缩写
 
-# 服务端渲染 SSR-客户端渲染 CSR-静态站点生成 SSG
+## 服务端渲染 SSR-客户端渲染 CSR-静态站点生成 SSG
 
 <https://juejin.cn/post/7128369638794231839>
 **客户端渲染 CSR**
@@ -1237,7 +1290,7 @@ html 页面内容在 build 的时候就定型了，相对于 SSR 不需要后端
 - dns-prefetch dns 预获取 告诉浏览器预先解析域名
 - prefetch 告诉浏览器需要优先获取或者缓存该资源
 
-# NPM scripts 脚本指南
+## NPM scripts 脚本指南
 
 <https://www.ruanyifeng.com/blog/2016/10/npm_scripts.html>
 "scripts": {
@@ -1245,7 +1298,7 @@ html 页面内容在 build 的时候就定型了，相对于 SSR 不需要后端
 }
 $ npm run build === $ node build.js
 
-# js eval 函数解析
+## js eval 函数解析
 
 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/eval>
 eval() 的参数是一个字符串。如果字符串表示的是表达式，eval() 会对表达式进行求值。如果参数表示一个或多个 JavaScript 语句，那么 eval() 就会执行这些语句。
@@ -1253,33 +1306,33 @@ eval() 的参数是一个字符串。如果字符串表示的是表达式，eval
 eval 内的代码在当前词法环境（lexical environment）中执行，因此它能访问外部变量
 <https://blog.csdn.net/aaahuahua/article/details/122201318>
 
-# 单元测试
+## 单元测试
 
 jest.js
 适合工具类函数进行单元测试
 <https://juejin.cn/post/7039108357554176037>
 
-# 发布订阅模式详解
+## 发布订阅模式详解
 
 [手动实现一个发布订阅模式](https://juejin.cn/post/6985156199192723487)
 **概念**
 发布-订阅模式其实是一种对象间一对多的依赖关系，当一个对象的状态发送改变时，所有依赖于它的对象都将得到状态改变的通知。
 订阅者（Subscriber）把自己想订阅的事件注册（Subscribe）到调度中心（Event Channel），当发布者（Publisher）发布该事件（Publish Event）到调度中心，也就是该事件触发时，由调度中心统一调度（Fire Event）订阅者注册到调度中心的处理代码。
 
-# js 内存机制执行机制
+## js 内存机制执行机制
 
 [js 内存机制](https://mp.weixin.qq.com/s/yWoZTlnhWsG3Gj0CsKEb0A)
 
-# less
+## less
 
 - less 样式封装
   <https://www.361shipin.com/blog/1554227874750267392>
 
-# vscode 代码模板
+## vscode 代码模板
 
 <https://zhuanlan.zhihu.com/p/100504877>
 
-# 闭包
+## 闭包
 
 - 高阶函数 函数作为一个函数的参数或者返回值 都叫闭包
   <https://www.liaoxuefeng.com/wiki/1022910821149312/1023021250770016>
@@ -1289,11 +1342,11 @@ jest.js
   react 闭包 和 addEventListner 闭包
   <https://zhuanlan.zhihu.com/p/514151293>
 
-# antd ui 库源码分析
+## antd ui 库源码分析
 
 <https://juejin.cn/post/7066420918708338702>
 
-# form 组件封装
+## form 组件封装
 
 formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可修改为失焦等)|value:组件受控值
 
@@ -1304,7 +1357,7 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
   <https://juejin.cn/post/7075673541751865357>
   <https://zh-hans.reactjs.org/docs/uncontrolled-components.html#gatsby-focus-wrapper>
 
-# Electron
+## Electron
 
 - 基于 umi 搭建 electron
   <https://zhuanlan.zhihu.com/p/376082990>
@@ -1319,32 +1372,31 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 2. 使用 remote 模块 // 渲染进程（web 页面）和主进程通信（IPC）提供了一种简单方法。
    <https://cloud.tencent.com/developer/article/2034372>
 
-- ['electron开发经验']<https://juejin.cn/post/6844904029231775758>
+- ['electron 开发经验']<https://juejin.cn/post/6844904029231775758>
 
-# Chrome Devtools
+## Chrome Devtools
 
 <https://mp.weixin.qq.com/s/3wjFs--CuIBkXsnyKRkAJQ>
 
-# UMI Plugins 插件开发
+## UMI Plugins 插件开发
 
 <https://github.com/frontend9/fe9-library/issues/50>
 
-# react-jsx-parser jsx解析插件
+## react-jsx-parser jsx 解析插件
 
 <https://github.com/TroyAlford/react-jsx-parser#readme>
 
 ```jsx
-import React from 'react'
-import JsxParser from 'react-jsx-parser'
-import Library from 'some-library-of-components'
+import React from "react";
+import JsxParser from "react-jsx-parser";
+import Library from "some-library-of-components";
 
 class InjectableComponent extends Component {
   static defaultProps = {
-    eventHandler: () => {}
-  }
+    eventHandler: () => {},
+  };
   // ... inner workings of InjectableComponent
 }
-
 
 /**
  * @bindings  注入变量  任何可复制变量的参数//可传函数
@@ -1354,8 +1406,10 @@ class InjectableComponent extends Component {
 const MyComponent = () => (
   <JsxParser
     bindings={{
-      foo: 'bar',
-      myEventHandler: () => { /* ... do stuff ... */ },
+      foo: "bar",
+      myEventHandler: () => {
+        /* ... do stuff ... */
+      },
     }}
     components={{ InjectableComponent, Library }}
     jsx={`
@@ -1365,5 +1419,5 @@ const MyComponent = () => (
       <Library.DataFetcher>((data) => <div>{data.name}</div>)</Library.DataFetcher>
     `}
   />
-)
+);
 ```
