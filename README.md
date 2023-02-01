@@ -936,14 +936,13 @@ element.style.setProperty("--my-var", jsVar + 4);
 
 ## REACT HOOKS 总结
 
-**2022_5_12**
-状态 usestate
-redux useReducer usestate的替代方案  处理复杂state逻辑时useReducer更可取
-副作用 useEffect-->uselayoutEffect ->react 函数式组件的函数体中，网络请求，模块订阅以及 DOM 操作都属与 _副作用_
-上下文 useContext  将状态和修改状态的方法在组件树顶部透传  在其子组件中 直接调用 避免多次嵌套组件层层传递
-记忆 useMemo-->useCallback
-引用 useRef-->useImperativeHandle
-自定义 hook
+- 状态 usestate
+- 复杂逻辑状态 useReducer usestate的替代方案  处理复杂state逻辑时useReducer更可取
+- 副作用 useEffect-->uselayoutEffect ->react 函数式组件的函数体中，网络请求，模块订阅以及 DOM 操作都属与 _副作用_
+- 上下文 useContext  将状态和修改状态的方法在组件树顶部透传  在其子组件中 直接调用 避免多次嵌套组件层层传递
+- 记忆 useMemo-->useCallback
+- 引用 useRef-->useImperativeHandle
+- 自定义 hook
 
 [简易redux =usecontext+useReducer](https://juejin.cn/post/6995105000523317278)
 
@@ -1048,6 +1047,9 @@ setCount2(count2 + 1);
 
 <!-- 返回一个函数，只有在依赖项发生变化的时候才会更新（返回一个新的函数）。 -->
 <!--todo 简单理解呢 useCallback 与 useMemo 一个缓存的是函数，一个缓存的是函数的返回值。useCallback 是来优化子组件的，防止子组件的重复渲染。useMemo 可以优化当前组件也可以优化子组件，优化当前组件主要是通过 memoize 来将一些复杂的计算逻辑进行缓存。-->
+- usememo 缓存某个变量 需要由大量计算得出的变量
+- usecallback 缓存某个函数 缓存函数
+**tip: useCallback是根据依赖(deps)缓存第一个入参的(callback)。useMemo是根据依赖(deps)缓存第一个入参(callback)执行后的值。**
 <!-- useCallback和useMemo的参数跟useEffect一致，他们之间最大的区别有是useEffect会用于处理副作用，而前两个hooks不能。
 useMemo和useCallback都会在组件第一次渲染的时候执行，之后会在其依赖的变量发生改变时再次执行；并且这两个hooks都返回缓存的值，useMemo返回缓存的变量，useCallback返回缓存的函数。 -->
 
@@ -1143,14 +1145,54 @@ Buffer 是 Nodejs 内置的二进制缓冲区，Buffer 相当于 ES6 中 Uint8Ar
 
 ## react 开发工具类
 
-<!-- 组件跳转 -->
+### 组件跳转
 
 click-to-component
 
-<!-- 页面切换动画效果 -->
+### 页面切换动画效果
 
 react-page-transition
 <https://mp.weixin.qq.com/s/9NFB1uNqNWiARbmUdWrBWQ>
+
+### react-jsx-parser jsx 解析插件
+
+<https://github.com/TroyAlford/react-jsx-parser#readme>
+
+```jsx
+import React from "react";
+import JsxParser from "react-jsx-parser";
+import Library from "some-library-of-components";
+
+class InjectableComponent extends Component {
+  static defaultProps = {
+    eventHandler: () => {},
+  };
+  // ... inner workings of InjectableComponent
+}
+
+/**
+ * @bindings  注入变量  任何可赋值为变量的参数//可传函数
+ * @components  注入jsx组件
+ * @jsx   解析目标主体内容   可写简单的箭头函数  有一些限制 不可写函数体，具名函数等
+ */
+const MyComponent = () => (
+  <JsxParser
+    bindings={{
+      foo: "bar",
+      myEventHandler: () => {
+        /* ... do stuff ... */
+      },
+    }}
+    components={{ InjectableComponent, Library }}
+    jsx={`
+      <h1>Header</h1>
+      <InjectableComponent eventHandler={myEventHandler} truthyProp />
+      <Library.SomeComponent someProp={foo} calc={1 + 1} stringProp="foo" />
+      <Library.DataFetcher>((data) => <div>{data.name}</div>)</Library.DataFetcher>
+    `}
+  />
+);
+```
 
 ## webpack
 
@@ -1382,42 +1424,7 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 
 <https://github.com/frontend9/fe9-library/issues/50>
 
-## react-jsx-parser jsx 解析插件
+## react.lazy suspense 懒加载
 
-<https://github.com/TroyAlford/react-jsx-parser#readme>
-
-```jsx
-import React from "react";
-import JsxParser from "react-jsx-parser";
-import Library from "some-library-of-components";
-
-class InjectableComponent extends Component {
-  static defaultProps = {
-    eventHandler: () => {},
-  };
-  // ... inner workings of InjectableComponent
-}
-
-/**
- * @bindings  注入变量  任何可复制变量的参数//可传函数
- * @components  注入jsx组件
- * @jsx   解析目标主体内容   可写简单的箭头函数  有一些限制 不可写函数体，具名函数等
- */
-const MyComponent = () => (
-  <JsxParser
-    bindings={{
-      foo: "bar",
-      myEventHandler: () => {
-        /* ... do stuff ... */
-      },
-    }}
-    components={{ InjectableComponent, Library }}
-    jsx={`
-      <h1>Header</h1>
-      <InjectableComponent eventHandler={myEventHandler} truthyProp />
-      <Library.SomeComponent someProp={foo} calc={1 + 1} stringProp="foo" />
-      <Library.DataFetcher>((data) => <div>{data.name}</div>)</Library.DataFetcher>
-    `}
-  />
-);
-```
+代码分割，首屏速度，懒加载
+[react.lazy+suspense实现懒加载](https://juejin.cn/post/6844903876219371534)
