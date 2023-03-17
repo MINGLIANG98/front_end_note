@@ -78,6 +78,8 @@ interface Type {
 }
 type ChildType = Type["name"];
 ```
+**typescript 装饰器**
+[typescript 5.0新特性](https://mp.weixin.qq.com/s/oPK10hMHvLGltsVk4hudZg)
 
 ## animation
 
