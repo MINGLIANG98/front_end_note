@@ -79,6 +79,42 @@ interface Type {
 type ChildType = Type["name"];
 ```
 
+[typescript 类型联动](https://www.banyudu.com/posts/typescript-related-type.c1623b)
+
+```ts
+// 先定义一个类型映射关系
+type TvalueMap = {
+    multiple: {
+        mode: 'combobox' | 'multiple';
+        value?: string[];
+        onChange?: (value: string[]) => void;
+    };
+    single: {
+        mode?: 'single'| undefined;
+        value?: string;
+        onChange?: (value: string) => void;
+    };
+};
+
+type Compoents = {
+    [T in keyof TvalueMap]: TvalueMap[T];
+}[keyof TvalueMap];
+// ===================== 等价
+type Compoents = {
+    mode: 'combobox' | 'multiple';
+    value?: string[] | undefined;
+    onChange?: ((value: string[]) => void) | undefined;
+} | {
+    mode?: 'single';
+    value?: string | undefined;
+    onChange?: ((value: string) => void) | undefined;
+}
+
+```
+
+**typescript 装饰器**
+[typescript 5.0新特性](https://mp.weixin.qq.com/s/oPK10hMHvLGltsVk4hudZg)
+
 ## animation
 
 <!-- 2022_4_24 -->
@@ -199,6 +235,7 @@ class 本质上是一个构造函数的语法糖，其底层实际上是通过 �
 - static 静态方法
   `tip:类相当于实例的原型，所有在类中定义的方法，都会被实例继承。 如果在一个方法前，加上 static 关键字，就表示该方法不会被实例继承，而是直接通过类来调用，这就称为"静态方法"。`
 
+- `操作符instanceof正是通过探测obj.__proto__.__proto__... === Constructor.prototype来验证obj是否是Constructor的实例`
   [详解 es6 中的 class](https://juejin.cn/post/6844904086089760775)
 
 ## unit32Array 获取随机 key
@@ -254,7 +291,7 @@ console.log(str.slice(2, str.length - 1)); // 输出'cdef',传递两个，为提
 4.split() 使用指定的分隔符将一个字符串拆分为多个子字符串数组并返回，原字符串不变。
 
 ```js
-const str = "A*B*C*D*E*F*G";
+const str = "A*B*C*D*E*F*G";    
 console.log(str.split("*")); // 输出 ["A", "B", "C", "D", "E", "F", "G"]
 ```
 
@@ -584,6 +621,11 @@ reduce() / reduceRight() 累加器
 reduce 从左到右将数组元素做“叠加”处理，返回一个值。reduceRight 从右到左。 不会改变原数组
 
 ```js
+    /**
+     * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
+     * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.
+     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
+     */
 const foo = [5,1,3,7,4].reduce((total, cur) => {
     console.log(`叠加：${total}，当前：${cur}`)
     return total + cur
@@ -996,14 +1038,15 @@ flushSync(() => {
 ```
 
 <!--? 新增 useEvent -->
+
 ### useEffect 和 useState
 
 <https://juejin.cn/post/6906007507531038727>
 
 ```jsx
-useEffect(()=>{
-    return destory
-},[dep])
+useEffect(() => {
+  return destory;
+}, [dep]);
 // useEffect 第一个参数 callback, 返回的 destory ， destory 作为下一次callback执行之前调用，用于清除上一次 callback 产生的副作用。
 ```
 
@@ -1011,7 +1054,7 @@ useEffect(()=>{
 a
 
 ```jsx
- const [datalist, setdatalist] = useState([...(dataSource ?? [])]);
+const [datalist, setdatalist] = useState([...(dataSource ?? [])]);
 ```
 
 **2022_5_11**
@@ -1105,6 +1148,8 @@ todo
 
 ## React Hook 重复渲染问题处理：useMemo, memo, useCallback
 
+[React18 + Vite + TypeScript 完成公司项目经验总结](https://juejin.cn/post/7205842390842458149)
+
 ### 为什么会存在重复渲染？
 
 这是因为 react hook 使用的是函数组件，父组件的任何一次修改，都会导致子组件的函数执行，从而重新进行渲染
@@ -1154,7 +1199,7 @@ todo
 - 鼠标类型:onClick\onContextMenu (右键)\onDoubleClick\onMouseDown\onMouseEnter\
 
   onMouseLeave\onMouseMove\onMouseOut\onMouseOver\onMouseUp
-
+  **drag拖拽事件**
   onDrag\onDrop\onDragEnd\onDragEnter\onDragExit\onDragLeave\onDragOver\onDragStart
 
 ## File、Blob、ArrayBuffer 等文件类的对象有什么区别和联系
@@ -1233,6 +1278,8 @@ const MyComponent = () => (
 ['webpack 详解-腾讯'](https://juejin.cn/post/6844903573675835400)
 
 ['从零实现一个 webpack'](https://juejin.cn/post/7170852747749621791)
+
+[前端构建工具发展历程](https://mp.weixin.qq.com/s/o8B8HAczZtIZM8V_HHwNqg)
 
 ## 打包工具 vite esbuild
 
@@ -1456,6 +1503,22 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 代码分割，首屏速度，懒加载
 [react.lazy+suspense 实现懒加载](https://juejin.cn/post/6844903876219371534)
 
-## koa洋葱圈 express
+## koa 洋葱圈 express
 
-[koa洋葱模型解析](https://segmentfault.com/a/1190000013981513)
+[koa 洋葱模型解析](https://segmentfault.com/a/1190000013981513)
+
+## AST 树
+
+[AST 树在线可视化](https://astexplorer.net/)
+
+## VUE
+
+[VUE3 快速入门](https://juejin.cn/post/6887359442354962445)
+
+## web本地数存储 离线存储
+
+- localStorage，虽然比cookie多，但是同样有上限（5M）左右，备选
+- websql 使用简单，存储量大，兼容性差，备选
+- indexDB api多且繁琐，存储量大、高版本浏览器兼容性较好，备选
+
+[前端本地存储方案](https://juejin.cn/post/7199826518569779256)
