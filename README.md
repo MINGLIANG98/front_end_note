@@ -1524,3 +1524,96 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 - indexDB api多且繁琐，存储量大、高版本浏览器兼容性较好，备选
 
 [前端本地存储方案](https://juejin.cn/post/7199826518569779256)
+
+## 设计模式
+
+### 单例模式
+单例模式用于确保一个类只有一个实例，并提供一个全局访问点。这种模式常用于实现全局状态管理、缓存等场景。
+```jsx
+// dataService.js
+
+// 定义一个基本的DataService抽象类
+class DataService {
+  constructor() {
+    // 如果尝试直接实例化DataService，抛出错误
+    if (new.target === DataService) {
+      throw new TypeError("不能实例化抽象类DataService");
+    }
+    // 初始化data属性，用于缓存请求的数据
+    this.data = null;
+  }
+
+  // 定义一个抽象的fetchData方法，需要在子类中实现
+  async fetchData(url) {
+    throw new Error("fetchData方法必须在子类中实现");
+  }
+}
+
+// 创建一个继承自DataService的具体实现类SpecificDataService
+class SpecificDataService extends DataService {
+  constructor() {
+    // 调用父类构造函数
+    super();
+    // 使用单例模式，确保只有一个SpecificDataService实例
+    if (SpecificDataService.instance) {
+      return SpecificDataService.instance;
+    }
+    SpecificDataService.instance = this;
+  }
+
+  // 在SpecificDataService类中实现fetchData方法
+  async fetchData(url) {
+    // 如果data属性为null，说明尚未请求数据
+    if (this.data === null) {
+      // 发起请求并获取响应
+      const response = await fetch(url);
+      // 解析响应的JSON数据
+      this.data = await response.json();
+    }
+    // 返回缓存的数据
+    return this.data;
+  }
+}
+
+// 实例化一个SpecificDataService对象
+const specificDataService = new SpecificDataService();
+
+// 导出specificDataService实例，以便在业务组件中使用
+export default specificDataService;
+
+
+// BusinessComponent.js
+import React, { useState, useEffect } from 'react';
+import dataService from './specificDataService';
+
+const BusinessComponent = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await dataService.fetchData('https://api.example.com/data');
+      setData(data);
+    };
+
+    fetchData();
+  }, []);
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <h1>业务组件</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  );
+};
+
+export default BusinessComponent;
+```
+这个示例首先定义了一个DataService抽象类，其中包含一个data属性用于缓存请求的数据，以及一个抽象的fetchData方法，需要在子类中实现。在DataService的构造函数中，我们添加了一个条件来确保不能直接实例化DataService。
+
+接下来，我们创建了一个名为SpecificDataService的子类，它继承自DataService。在SpecificDataService的构造函数中，我们使用了单例模式，确保整个应用程序中只有一个SpecificDataService实例。同时，在这个子类中，我们实现了fetchData方法，用于发起请求并解析响应的JSON数据。
+
+最后，我们实例化了一个SpecificDataService对象并将其导出，以便在业务组件中使用。
