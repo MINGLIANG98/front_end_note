@@ -79,41 +79,45 @@ interface Type {
 type ChildType = Type["name"];
 ```
 
+**typescript 装饰器**
+[typescript 5.0 新特性](https://mp.weixin.qq.com/s/oPK10hMHvLGltsVk4hudZg)
+
 [typescript 类型联动](https://www.banyudu.com/posts/typescript-related-type.c1623b)
 
 ```ts
 // 先定义一个类型映射关系
 type TvalueMap = {
-    multiple: {
-        mode: 'combobox' | 'multiple';
-        value?: string[];
-        onChange?: (value: string[]) => void;
-    };
-    single: {
-        mode?: 'single'| undefined;
-        value?: string;
-        onChange?: (value: string) => void;
-    };
+  multiple: {
+    mode: "combobox" | "multiple";
+    value?: string[];
+    onChange?: (value: string[]) => void;
+  };
+  single: {
+    mode?: "single" | undefined;
+    value?: string;
+    onChange?: (value: string) => void;
+  };
 };
 
 type Compoents = {
-    [T in keyof TvalueMap]: TvalueMap[T];
+  [T in keyof TvalueMap]: TvalueMap[T];
 }[keyof TvalueMap];
 // ===================== 等价
-type Compoents = {
-    mode: 'combobox' | 'multiple';
-    value?: string[] | undefined;
-    onChange?: ((value: string[]) => void) | undefined;
-} | {
-    mode?: 'single';
-    value?: string | undefined;
-    onChange?: ((value: string) => void) | undefined;
-}
-
+type Compoents =
+  | {
+      mode: "combobox" | "multiple";
+      value?: string[] | undefined;
+      onChange?: ((value: string[]) => void) | undefined;
+    }
+  | {
+      mode?: "single";
+      value?: string | undefined;
+      onChange?: ((value: string) => void) | undefined;
+    };
 ```
 
 **typescript 装饰器**
-[typescript 5.0新特性](https://mp.weixin.qq.com/s/oPK10hMHvLGltsVk4hudZg)
+[typescript 5.0 新特性](https://mp.weixin.qq.com/s/oPK10hMHvLGltsVk4hudZg)
 
 ## animation
 
@@ -291,7 +295,7 @@ console.log(str.slice(2, str.length - 1)); // 输出'cdef',传递两个，为提
 4.split() 使用指定的分隔符将一个字符串拆分为多个子字符串数组并返回，原字符串不变。
 
 ```js
-const str = "A*B*C*D*E*F*G";    
+const str = "A*B*C*D*E*F*G";
 console.log(str.split("*")); // 输出 ["A", "B", "C", "D", "E", "F", "G"]
 ```
 
@@ -1150,7 +1154,7 @@ todo
 
 [React18 + Vite + TypeScript 完成公司项目经验总结](https://juejin.cn/post/7205842390842458149)
 
-[vite实现一个小的npm库](https://juejin.cn/post/7216182763237916729#heading-0)
+[vite 实现一个小的 npm 库](https://juejin.cn/post/7216182763237916729#heading-0)
 
 ### 为什么会存在重复渲染？
 
@@ -1172,9 +1176,9 @@ todo
 - React.memo 类似 PureComponent 能用就用
 - useMemo 做复杂推导时必用，简单计算用了也不会错。
 
-1. props context 父组件向子组件传递数据  子组件应视其为正常组件数据传递，子组件会自动重新渲染， **不应该视为副作用，使用useeffect去处理**,
-   读取reduex,localstorage，fetch等状态都是副作用操作，因为它们涉及到组件外部的状态(可能会在某个时间点被修改)，
-   可能会影响组件的状态、生命周期方法、渲染结果等。 **使用useeffect去处理是好的解决办法**
+1. props context 父组件向子组件传递数据 子组件应视其为正常组件数据传递，子组件会自动重新渲染， **不应该视为副作用，使用 useeffect 去处理**,
+   读取 reduex,localstorage，fetch 等状态都是副作用操作，因为它们涉及到组件外部的状态(可能会在某个时间点被修改)，
+   可能会影响组件的状态、生命周期方法、渲染结果等。 **使用 useeffect 去处理是好的解决办法**
 
 2. 父组件没有 props 传入子组件 props --- 使用 React.memo 即可
    先简单介绍一下这个方法：
@@ -1205,7 +1209,7 @@ todo
 - 鼠标类型:onClick\onContextMenu (右键)\onDoubleClick\onMouseDown\onMouseEnter\
 
   onMouseLeave\onMouseMove\onMouseOut\onMouseOver\onMouseUp
-  **drag拖拽事件**
+  **drag 拖拽事件**
   onDrag\onDrop\onDragEnd\onDragEnter\onDragExit\onDragLeave\onDragOver\onDragStart
 
 ## File、Blob、ArrayBuffer 等文件类的对象有什么区别和联系
@@ -1521,14 +1525,156 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 
 [VUE3 快速入门](https://juejin.cn/post/6887359442354962445)
 
-## web本地数存储 离线存储
+## web 本地数存储 离线存储
 
-- localStorage，虽然比cookie多，但是同样有上限（5M）左右，备选
+- localStorage，虽然比 cookie 多，但是同样有上限（5M）左右，备选
 - websql 使用简单，存储量大，兼容性差，备选
-- indexDB api多且繁琐，存储量大、高版本浏览器兼容性较好，备选
+- indexDB api 多且繁琐，存储量大、高版本浏览器兼容性较好，备选
 
 [前端本地存储方案](https://juejin.cn/post/7199826518569779256)
 
 ## 请求缓存
 
 [处理组件重复调用请求](https://juejin.cn/post/7222096611635003451)
+
+## 设计模式
+
+### 单例模式
+
+单例模式用于确保一个类只有一个实例，并提供一个全局访问点。这种模式常用于实现全局状态管理、缓存等场景。
+
+```tsx
+// dataService.js
+
+// 定义一个基本的DataService抽象类
+class DataService {
+  constructor() {
+    // 如果尝试直接实例化DataService，抛出错误
+    if (new.target === DataService) {
+      throw new TypeError("不能实例化抽象类DataService");
+    }
+    // 初始化data属性，用于缓存请求的数据
+    this.data = null;
+  }
+
+  // 定义一个抽象的fetchData方法，需要在子类中实现
+  async fetchData(url) {
+    throw new Error("fetchData方法必须在子类中实现");
+  }
+}
+
+// 创建一个继承自DataService的具体实现类SpecificDataService
+class SpecificDataService extends DataService {
+  constructor() {
+    // 调用父类构造函数
+    super();
+    // 使用单例模式，确保只有一个SpecificDataService实例
+    if (SpecificDataService.instance) {
+      return SpecificDataService.instance;
+    }
+    SpecificDataService.instance = this;
+  }
+
+  // 在SpecificDataService类中实现fetchData方法
+  async fetchData(url) {
+    // 如果data属性为null，说明尚未请求数据
+    // ?? 判断这里要注意
+    if (this.data === null) {
+      // 发起请求并获取响应
+      const response = await fetch(url);
+      // 解析响应的JSON数据
+      this.data = await response.json();
+    }
+    // 返回缓存的数据
+    return this.data;
+  }
+}
+
+// 实例化一个SpecificDataService对象
+const specificDataService = new SpecificDataService();
+
+// 导出specificDataService实例，以便在业务组件中使用
+export default specificDataService;
+
+
+// BusinessComponent.js
+import React, { useState, useEffect } from 'react';
+import dataService from './specificDataService';
+
+const BusinessComponent = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await dataService.fetchData('https://api.example.com/data');
+      setData(data);
+    };
+
+    fetchData();
+  }, []);
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <h1>业务组件</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  );
+};
+
+export default BusinessComponent;
+
+
+// 优化版本  上面的 单例函数 无法满足 并发初始化组件的使用场景
+class DataService{
+    static instance: any;
+    private data: any;
+    private promise: Promise<any> | null | undefined;
+    constructor() {
+        if (DataService.instance) {
+            return DataService.instance;
+        }
+        DataService.instance = this;
+        this.promise = null;
+    }
+
+    // 单例函数 保证只请求一次 后续请求会取第一次请求的结果 满足并发的场景
+    // 如果使用 timestamp计数的话 多线程可能会造成 变量冲突
+    async fetchData<T>(callback: () => Promise<T>): Promise<T> {
+        if (!this.promise) {
+            // 如果promise不存在，说明还未请求数据
+            try {
+                // 将promise赋值为一个新的promise实例
+                this.promise = callback();
+                const response = await this.promise;
+                this.data = response;
+                // 在使用async/await时，函数的返回值将自动被封装为一个Promise对象。
+                // 这是因为async/await是基于Promise的语法糖，编译后会自动封装为一个Promise对象，
+                // 因此在外部获取该函数的返回值时，始终会返回一个Promise对象。
+                return this.data;
+            } catch (error) {
+                this.promise = null;
+                return Promise.reject(error);
+            }
+        } else {
+            // 如果已经存在一个promise实例，则直接返回该实例
+            // 因为这个逻辑是在构造函数内部实现的，所以不需要使用 await。
+            // 如果使用 await，则构造函数内部会被阻塞 直到该 promise 执行完成，无法实现并发请求的效果。
+            return this.promise;
+        }
+    }
+}
+
+const dataService = new DataService();
+export default dataService;
+
+```
+
+这个示例首先定义了一个 DataService 抽象类，其中包含一个 data 属性用于缓存请求的数据，以及一个抽象的 fetchData 方法，需要在子类中实现。在 DataService 的构造函数中，我们添加了一个条件来确保不能直接实例化 DataService。
+
+接下来，我们创建了一个名为 SpecificDataService 的子类，它继承自 DataService。在 SpecificDataService 的构造函数中，我们使用了单例模式，确保整个应用程序中只有一个 SpecificDataService 实例。同时，在这个子类中，我们实现了 fetchData 方法，用于发起请求并解析响应的 JSON 数据。
+
+最后，我们实例化了一个 SpecificDataService 对象并将其导出，以便在业务组件中使用。
