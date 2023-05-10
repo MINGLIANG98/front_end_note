@@ -1150,6 +1150,8 @@ todo
 
 [React18 + Vite + TypeScript 完成公司项目经验总结](https://juejin.cn/post/7205842390842458149)
 
+[vite实现一个小的npm库](https://juejin.cn/post/7216182763237916729#heading-0)
+
 ### 为什么会存在重复渲染？
 
 这是因为 react hook 使用的是函数组件，父组件的任何一次修改，都会导致子组件的函数执行，从而重新进行渲染
@@ -1170,16 +1172,20 @@ todo
 - React.memo 类似 PureComponent 能用就用
 - useMemo 做复杂推导时必用，简单计算用了也不会错。
 
-1. 父组件没有 props 传入子组件 props --- 使用 React.memo 即可
+1. props context 父组件向子组件传递数据  子组件应视其为正常组件数据传递，子组件会自动重新渲染， **不应该视为副作用，使用useeffect去处理**,
+   读取reduex,localstorage，fetch等状态都是副作用操作，因为它们涉及到组件外部的状态(可能会在某个时间点被修改)，
+   可能会影响组件的状态、生命周期方法、渲染结果等。 **使用useeffect去处理是好的解决办法**
+
+2. 父组件没有 props 传入子组件 props --- 使用 React.memo 即可
    先简单介绍一下这个方法：
    React.memo 为高阶组件。它与 React.PureComponent 非常相似。默认只会对复杂类型对象做浅层比较，如果需要控制对比过程我们可以将比较函数作为第二个参数传入。
    React.memo(MyComp, areEqual)
    areEqual（第二个比较回调函数）返回值为 true 则使用缓存 false 则重复渲染;
    function areEqual(prevProps, nextProps) { /_如果把 nextProps 传入 render 方法的返回结果与 将 prevProps 传入 render 方法的返回结果一致则返回 true， 否则返回 false_/ }
 
-2. 父组件传入子组件的 props 都是简单数据类型 --- 使用 React.memo 即可
+3. 父组件传入子组件的 props 都是简单数据类型 --- 使用 React.memo 即可
    由于上面说的 React.memo 会默认进行浅层比较，使用 React.memo 包裹的子组件，会浅层比对传入的 props 是否有变化。简单数值类型，浅层对比即可判断是否发生了变化。如果传入的 props 没有变化，则使用缓存的子组件，如果传入的 props 发生变化，则组件会重新渲染。问题解决～;
-3. 父组件传入子组件的 props 存在复杂数据类型 --- 使用 memo, useMemo, useCallback
+4. 父组件传入子组件的 props 存在复杂数据类型 --- 使用 memo, useMemo, useCallback
    我们通过 props 向子组件传值时，可能需要传入复杂类型如 object，以及 function 类型的值。而 memo 子组件进行渲染比对时进行的是浅比较，即使我们传入相同的 object 或 function，子组件也会认为传入参数存在修改，从而子组件重新进行渲染。这个时候仅仅使用 memo 包裹子组件应该没办法解决问题了，是时候用上我们的 useCallback 以及 useMemo 了。
 
 ## React 鼠标事件合集
@@ -1522,3 +1528,7 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 - indexDB api多且繁琐，存储量大、高版本浏览器兼容性较好，备选
 
 [前端本地存储方案](https://juejin.cn/post/7199826518569779256)
+
+## 请求缓存
+
+[处理组件重复调用请求](https://juejin.cn/post/7222096611635003451)
