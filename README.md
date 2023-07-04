@@ -1058,7 +1058,7 @@ useEffect(() => {
 a
 
 ```jsx
-const [datalist, setdatalist] = useState([...(dataSource ?? [])]);
+const [datalist, setdatalist] = useState([...(propdataSource ?? [])]);
 ```
 
 **2022_5_11**
@@ -1478,7 +1478,7 @@ jest.js
 formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可修改为失焦等)|value:组件受控值
 
 - 受控组件
-  由 react 组件接管组件的值存储 存在 usestate 或者 form 中 通过 value 进行写入
+  由 react 组件接管组件的值存储 存在 usestate 或者 form 中 通过 value 进行写入 
 - 非受控组件
   由 Input 等组件底层控制 通过 使用 ref 从 DOM 获取表单值
   <https://juejin.cn/post/7075673541751865357>
@@ -1520,6 +1520,11 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 ## AST 树
 
 [AST 树在线可视化](https://astexplorer.net/)
+
+### 一个 react 代码 到浏览器执行的过程
+
+1. jsx 代码 通过 Babel（**AST 语法树 Babel 使用@babel/parser 包来解析源代码生成 AST，使用@babel/traverse 包遍历 AST 并生成新的 AST，最后使用@babel/generator 包将 AST 转换为 JavaScript 代码字符串。这些包提供了一组 API 来访问和操作 AST 节点。具体而言，@babel/parser 提供了一个 parse 方法来将源代码解析为 AST 节点，@babel/traverse 提供了一个 traverse 方法来遍历和修改 AST 节点，@babel/generator 提供了一个 generate 方法来将 AST 节点转换为 JavaScript 代码字符串。** ） 转换为 react.createelement 代码 再通过 react 生成 虚拟dom树 通过diff算法 渲染真实dom 和对应的js代码
+2. js 代码 再通过浏览器内部解析=>转化为**AST抽象语法树**再将AST转化为字节码或者机器码等浏览器可以执行的二进制代码
 
 ## VUE
 
@@ -1596,17 +1601,16 @@ const specificDataService = new SpecificDataService();
 // 导出specificDataService实例，以便在业务组件中使用
 export default specificDataService;
 
-
 // BusinessComponent.js
-import React, { useState, useEffect } from 'react';
-import dataService from './specificDataService';
+import React, { useState, useEffect } from "react";
+import dataService from "./specificDataService";
 
 const BusinessComponent = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await dataService.fetchData('https://api.example.com/data');
+      const data = await dataService.fetchData("https://api.example.com/data");
       setData(data);
     };
 
@@ -1627,50 +1631,53 @@ const BusinessComponent = () => {
 
 export default BusinessComponent;
 
-
 // 优化版本  上面的 单例函数 无法满足 并发初始化组件的使用场景
-class DataService{
-    static instance: any;
-    private data: any;
-    private promise: Promise<any> | null | undefined;
-    constructor() {
-        if (DataService.instance) {
-            return DataService.instance;
-        }
-        DataService.instance = this;
-        this.promise = null;
+class DataService {
+  static instance: any;
+  private data: any;
+  private promise: Promise<any> | null | undefined;
+  constructor() {
+    if (DataService.instance) {
+      return DataService.instance;
     }
+    DataService.instance = this;
+    this.promise = null;
+  }
 
-    // 单例函数 保证只请求一次 后续请求会取第一次请求的结果 满足并发的场景
-    // 如果使用 timestamp计数的话 多线程可能会造成 变量冲突
-    async fetchData<T>(callback: () => Promise<T>): Promise<T> {
-        if (!this.promise) {
-            // 如果promise不存在，说明还未请求数据
-            try {
-                // 将promise赋值为一个新的promise实例
-                this.promise = callback();
-                const response = await this.promise;
-                this.data = response;
-                // 在使用async/await时，函数的返回值将自动被封装为一个Promise对象。
-                // 这是因为async/await是基于Promise的语法糖，编译后会自动封装为一个Promise对象，
-                // 因此在外部获取该函数的返回值时，始终会返回一个Promise对象。
-                return this.data;
-            } catch (error) {
-                this.promise = null;
-                return Promise.reject(error);
-            }
-        } else {
-            // 如果已经存在一个promise实例，则直接返回该实例
-            // 因为这个逻辑是在构造函数内部实现的，所以不需要使用 await。
-            // 如果使用 await，则构造函数内部会被阻塞 直到该 promise 执行完成，无法实现并发请求的效果。
-            return this.promise;
-        }
+  // 单例函数 保证只请求一次 后续请求会取第一次请求的结果 满足并发的场景
+  // 如果使用 timestamp计数的话 多线程可能会造成 变量冲突
+  async fetchData<T>(callback: () => Promise<T>): Promise<T> {
+    if (!this.promise) {
+      // 如果promise不存在，说明还未请求数据
+      try {
+        // 将promise赋值为一个新的promise实例
+        this.promise = callback();
+        const response = await this.promise;
+        this.data = response;
+        // 在使用async/await时，函数的返回值将自动被封装为一个Promise对象。
+        // 这是因为async/await是基于Promise的语法糖，编译后会自动封装为一个Promise对象，
+        // 因此在外部获取该函数的返回值时，始终会返回一个Promise对象。
+        return this.data;
+      } catch (error) {
+        this.promise = null;
+        return Promise.reject(error);
+      }
+    } else {
+      // 如果已经存在一个promise实例，则直接返回该实例
+      // 因为这个逻辑是在构造函数内部实现的，所以不需要使用 await。
+      // 如果使用 await，则构造函数内部会被阻塞 直到该 promise 执行完成，无法实现并发请求的效果。
+      return this.promise;
     }
+  }
+  // 卸载缓存数据
+  destory() {
+    this.data = null;
+    this.promise = null;
+  }
 }
 
 const dataService = new DataService();
 export default dataService;
-
 ```
 
 这个示例首先定义了一个 DataService 抽象类，其中包含一个 data 属性用于缓存请求的数据，以及一个抽象的 fetchData 方法，需要在子类中实现。在 DataService 的构造函数中，我们添加了一个条件来确保不能直接实例化 DataService。
