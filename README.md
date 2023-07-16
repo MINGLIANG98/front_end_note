@@ -1478,7 +1478,7 @@ jest.js
 formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可修改为失焦等)|value:组件受控值
 
 - 受控组件
-  由 react 组件接管组件的值存储 存在 usestate 或者 form 中 通过 value 进行写入 
+  由 react 组件接管组件的值存储 存在 usestate 或者 form 中 通过 value 进行写入
 - 非受控组件
   由 Input 等组件底层控制 通过 使用 ref 从 DOM 获取表单值
   <https://juejin.cn/post/7075673541751865357>
@@ -1685,3 +1685,7 @@ export default dataService;
 接下来，我们创建了一个名为 SpecificDataService 的子类，它继承自 DataService。在 SpecificDataService 的构造函数中，我们使用了单例模式，确保整个应用程序中只有一个 SpecificDataService 实例。同时，在这个子类中，我们实现了 fetchData 方法，用于发起请求并解析响应的 JSON 数据。
 
 最后，我们实例化了一个 SpecificDataService 对象并将其导出，以便在业务组件中使用。
+
+## 前端进阶指南
+
+[ssh写给初中级前端的高级进阶指南](https://juejin.cn/post/6844904103504527374#heading-4)
