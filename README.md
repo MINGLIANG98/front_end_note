@@ -771,34 +771,33 @@ uselayoutefft and useeffect
     parseTreeJson(treeNodes);
 
     //非递归广度优先实现
-    var iterator1 = function (treeNodes) {
-        if (!treeNodes || !treeNodes.length) return;
+    const iterator = function (treeNodes?: RouterType[]) {
+      // 如果树节点为空或长度为0，直接返回空数组
+      if (!treeNodes || !treeNodes.length) return [];
 
-        var stack = [];
+      let queue: RouterType[] = []; // 创建一个队列来保存待处理的节点
+      queue.push(...treeNodes); // 将树节点直接入队列
 
-        //先将第一层节点放入栈
-        for (var i = 0, len = treeNodes.length; i < len; i++) {
-            stack.push(treeNodes[i]);
+      const result: RouterType[] = []; // 创建一个数组来保存遍历结果
+
+      // 当队列不为空时，进行循环，这是一个非递归的实现
+      while (queue.length) {
+        // 从队列头部移出一个节点
+        const item = queue.shift();
+
+        // 将节点添加到结果数组中，这是一个广度优先搜索的步骤
+        if (item) {
+          result.push(item);
         }
 
-        var item;
-
-        while (stack.length) {
-            item = stack.shift();
-
-            console.log(item.id);
-
-            //如果该节点有子节点，继续添加进入栈底
-            if (item.children && item.children.length) {
-                //len = item.children.length;
-
-                // for (i = 0; i < len; i++) {
-                //  stack.push(item.children[i]);
-                // }
-
-                stack = stack.concat(item.children);
-            }
+        // 如果该节点有子节点
+        if (item && item.routes && item.routes.length) {
+          // 添加子节点到队列尾部
+          queue.push(...item.routes);
         }
+      }
+
+      return result; // 返回遍历结果数组
     };
 
     console.log('------------- 非递归广度优先实现 ------------------');
@@ -1689,3 +1688,11 @@ export default dataService;
 ## 前端进阶指南
 
 [ssh写给初中级前端的高级进阶指南](https://juejin.cn/post/6844904103504527374#heading-4)
+
+## call apply bind
+
+[call，apply手动实现](https://github.com/mqyqingfeng/Blog/issues/11)
+bind() 方法会创建一个新函数。当这个新函数被调用时，bind() 的第一个参数将作为它运行时的 this，之后的一序列参数将会在传递的实参前传入作为它的参数。(来自于 MDN )
+call apply 都是使用一个指定的this 和若干个参数的情况下调用某个函数
+
+不同点：传参方式不同 call 第二个以后的参数都会传入调用的函数,apply 第二个参数为一个数组 会解构放入调用的函数
