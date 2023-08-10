@@ -1,0 +1,154 @@
+.modalTitle {
+    background-image: url('@/assets/enviroment_screen/modalTitle.png');
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    color: #fff;
+    font-size: 28px;
+    font-family: PANGMENZHENGDAO;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 40px;
+}
+
+.modal {
+    :global {
+        .ant-table {
+            height: 600px;
+            overflow-y: auto;
+            &::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: #30E8EC;
+                border-radius: 4px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background-color: rgba(5, 11, 15, 0.6);
+            }
+        }
+
+        .ant-modal-content,
+        .ant-modal-header,
+        .ant-modal-body {
+            // background-color: #050B0F;
+            background-color: rgba(5, 11, 15, 0.6);
+        }
+
+        .ant-modal-header {
+            border-bottom: 2px solid rgba(139, 142, 154, 0.7);
+            padding: 12px 24px;
+        }
+
+        .ant-modal-close {
+            color: #fff;
+        }
+
+        .ant-modal-close-icon {
+            background-color: #30e8ec;
+        }
+        .ant-pro-card-body{
+         padding-inline: 8px;
+        }
+    }
+}
+
+.table {
+
+    :global {
+
+        /* 设置表头为透明背景 */
+        .ant-table-thead tr th {
+            background-color: transparent !important;
+            color: #fff;
+        }
+
+        /* 设置表格内容区域为透明背景 */
+        .ant-table-tbody>tr>td {
+            background-color: transparent !important;
+        }
+
+        /* 设置表格单元格内容为透明背景 */
+        .ant-table-cell {
+            background-color: transparent !important;
+        }
+
+        /* 设置整个表格的字体颜色为黑色 */
+        .ant-table {
+            color: #30E8EC !important;
+            background-color: transparent !important;
+            span {
+                color: #30E8EC !important;
+            }
+            .ant-table-cell-row-hover{
+            background-color: rgba(11, 19, 67, 0.7) !important;
+            }
+        }
+
+        .ant-pro-card {
+            background-color: transparent !important;
+        }
+
+        .ant-empty-description {
+            color: #30E8EC;
+        }
+    }
+
+    :global {
+        .ant-pagination {
+            // position: absolute;
+            // right: 100px;
+            // z-index: 999;
+            // width: fit-content;
+        }
+
+        .ant-pagination-options {
+            .ant-select-selector,
+            div,
+            span {
+                background-color: #223e5c;
+                border-color: #30E8EC;
+                color: #30E8EC !important;
+            }
+        }
+
+        .ant-pagination-options,
+        .ant-pagination-item-link,
+        .ant-pagination-item,
+        .ant-pagination-prev,
+        .ant-pagination-next {
+            // width: 48px;
+            // height: 48px;
+            // font-size: 32px;
+            // line-height: 42px;
+            background-color: #223e5c;
+            border-color: #30E8EC;
+
+            a {
+                color: #30E8EC !important;
+            }
+        }
+
+        .ant-pagination-item-active {
+            a {
+                color: #fff !important;
+            }
+        }
+
+        .ant-pagination-item-ellipsis {
+            color: #30E8EC !important;
+        }
+
+        .ant-pagination-item-link {
+            color: #30E8EC;
+            // font-size: 26px;
+        }
+
+        .ant-pagination-total-text {
+            color: #30E8EC;
+        }
+    }
+}
