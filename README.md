@@ -1294,6 +1294,11 @@ const MyComponent = () => (
 
 [前端构建工具发展历程](https://mp.weixin.qq.com/s/o8B8HAczZtIZM8V_HHwNqg)
 
+[webpack实战，react18+webpack5](https://juejin.cn/post/7111922283681153038?searchId=20231124091253F343AA1BC682105C5060#heading-12)
+
+[webpack实战，react18](https://juejin.cn/post/6844904031240863758?searchId=20231124091205C8D21CE784EF7860D82C)
+[项目地址](https://github.com/guojiongwei/webpack5-react-ts)
+
 ## 打包工具 vite esbuild
 
 **esbuild**
