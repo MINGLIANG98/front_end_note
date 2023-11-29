@@ -1590,6 +1590,10 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 
 [VUE3 快速入门](https://juejin.cn/post/6887359442354962445)
 
+### Diff算法
+
+ [react和vue diff算法的对比](https://juejin.cn/post/7116141318853623839?searchId=2023112909492183EAA552FB8420C74D3C)
+
 ## web 本地数存储 离线存储
 
 - localStorage，虽然比 cookie 多，但是同样有上限（5M）左右，备选
@@ -1823,3 +1827,7 @@ function MyComponent() {
 
 export default MyComponent;
 ```
+
+## Reflect
+
+## Proxy
