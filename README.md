@@ -1831,3 +1831,27 @@ export default MyComponent;
 ## Reflect
 
 ## Proxy
+
+```js
+let numbers = [0, 1, 2];
+
+numbersProxy = new Proxy(numbers, {
+    get(target, prop) {
+        if (prop in target) {
+            return target[prop];
+        } else {
+            return '?'; // 默认值
+        }
+    },
+    set(target, prop, val, instance) { // 拦截写入操作
+        if (typeof val == 'number') {
+            // 如果不对值进行修改,单纯的赋值 直接返回true就行了
+            // 不写return 或者返回任何 falsy值，则该操作将触发 TypeError
+            target[prop] = val;
+            return true;
+        } else {
+            return false;
+        }
+    }
+});
+```
