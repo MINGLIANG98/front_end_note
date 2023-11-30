@@ -1294,9 +1294,9 @@ const MyComponent = () => (
 
 [前端构建工具发展历程](https://mp.weixin.qq.com/s/o8B8HAczZtIZM8V_HHwNqg)
 
-[webpack实战，react18+webpack5](https://juejin.cn/post/7111922283681153038?searchId=20231124091253F343AA1BC682105C5060#heading-12)
+[webpack 实战，react18+webpack5](https://juejin.cn/post/7111922283681153038?searchId=20231124091253F343AA1BC682105C5060#heading-12)
 
-[webpack实战，react18](https://juejin.cn/post/6844904031240863758?searchId=20231124091205C8D21CE784EF7860D82C)
+[webpack 实战，react18](https://juejin.cn/post/6844904031240863758?searchId=20231124091205C8D21CE784EF7860D82C)
 [项目地址](https://github.com/guojiongwei/webpack5-react-ts)
 
 ## 打包工具 vite esbuild
@@ -1317,7 +1317,113 @@ Vite，一个基于浏览器原生 ES imports 的开发服务器。利用浏览�
 即时热模块更换（HMR）
 真正的按需编译
 
-## Jenkins 部署
+## CL CD
+
+### webpack 打包通过 jekins 实现自动部署
+
+```JS
+const { REACT_APP_ENV } = process.env;
+const path = require('path');
+const fs = require('fs');
+const archiver = require('archiver');
+const { exec } = require('child_process');
+
+  chainWebpack(config: any) {
+
+    if (REACT_APP_ENV === 'production') {
+      // 编译完成钩子
+      config.plugin('afterEmit').use({
+        apply: (compiler: any) => {
+          // 按照注册顺序执行
+          // 删除项目根路径dist.zip
+          // compiler.hooks.afterEmit.tap('CleanDistZipPlugin', () => {
+          //   const outputPath = config.output.get('path');
+          //   const zipFilePath = path.resolve(outputPath, '..', 'dist.zip');
+          //   // 在构建完成后，使用 fs 模块删除 dist.zip 文件
+          //   if (fs.existsSync(zipFilePath)) {
+          //     console.log('remove dist.zip')
+          //     fs.unlinkSync(zipFilePath);
+          //   }
+          // });
+          // 压缩dist
+          compiler.hooks.afterEmit.tap('ArchiveDistPlugin', () => {
+            const outputPath = config.output.get('path');
+            const outputFolder = path.resolve(outputPath, '..');
+            // 压缩到项目根路径
+            // const zipFilePath = path.join(outputFolder, 'dist.zip');
+            // 压缩到指定路径
+            const targetPath = '\\\\192.168.1.35\\samba\\basifu\\dist.zip';
+
+            // 创建一个 archiver 实例
+            const archive = archiver('zip', { zlib: { level: 9 } });
+
+            // 创建一个输出流，将压缩文件写入
+            const output = fs.createWriteStream(targetPath);
+            // 监听错误事件
+            archive.on('error', (err: any) => {
+              throw err;
+            });
+            // 监听关闭事件
+            output.on('close', () => {
+              console.log('dist.zip created successfully!');
+              reloadServer();
+            });
+            // 将 dist 目录添加到压缩文件
+            archive.directory(path.join(outputFolder, 'dist'), 'dist');
+            // 将压缩文件写入输出流
+            archive.pipe(output);
+            // 执行压缩
+            archive.finalize();
+          });
+        },
+      });
+    }
+  },
+function reloadServer() {
+  // 账户id
+  const userName = 'zk';
+  // 账户密钥token
+  const uerToken = '11baf786f660c3307eba6515f850833bae';
+
+  const url =
+    // jekins提供的restful api 在 项目工程里面配置token：xxx（autobuildToken）
+    'http://192.168.1.35:8080/job/basf/job/basifu_frontend/buildWithParameters?token=autobuildToken';
+
+  exec(
+    // 执行windows shell脚本
+    `curl -X POST  -u ${userName}:${uerToken} ${url}`,
+    (error:any) => {
+      if (error) {
+        console.error(`Error triggering Jenkins build: ${error.message}`);
+        return;
+      }
+      console.log('Jenkins build triggered successfully!');
+    },
+  );
+  // 构建 HTTP Basic Authentication 头部
+  // const basicAuthHeader = 'Basic ' + btoa(`${userName}:${uerToken}`);
+  // webpack 处在node环境中无法使用浏览器api  使用node-fetch这类api 会直接报导入错误
+  // fetch(url, {
+  //   method: 'POST',
+  //   headers: {
+  //     Authorization: basicAuthHeader,
+  //   },
+  // })
+  //   .then((response) => {
+  //     console.log(response);
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! Status: ${response.status}`);
+  //     }
+  //     console.log('Build triggered successfully!');
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error triggering build:', error);
+  //   });
+}
+
+```
+
+### Jenkins 部署
 
 <https://juejin.cn/post/7102360505313918983>
 
@@ -1355,7 +1461,7 @@ map.forEach((value, key) => {
   //  --
 });
 // map转数组 获得一个二维数组
-const arr =[...map]
+const arr = [...map];
 ```
 
 **WeakMap**
@@ -1373,7 +1479,7 @@ const arr =[...map]
 // 而Map会维持强引用 即使 键的对象没有其他引用 只要它作为 Map 的键存在，它就不会被垃圾回收。
 ```
 
-[weakMap和Map的区别](https://zhuanlan.zhihu.com/p/366505417)
+[weakMap 和 Map 的区别](https://zhuanlan.zhihu.com/p/366505417)
 
 _ES6 新增_
 **set**
@@ -1590,9 +1696,9 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 
 [VUE3 快速入门](https://juejin.cn/post/6887359442354962445)
 
-### Diff算法
+### Diff 算法
 
- [react和vue diff算法的对比](https://juejin.cn/post/7116141318853623839?searchId=2023112909492183EAA552FB8420C74D3C)
+[react 和 vue diff 算法的对比](https://juejin.cn/post/7116141318853623839?searchId=2023112909492183EAA552FB8420C74D3C)
 
 ## web 本地数存储 离线存储
 
@@ -1836,22 +1942,23 @@ export default MyComponent;
 let numbers = [0, 1, 2];
 
 numbersProxy = new Proxy(numbers, {
-    get(target, prop) {
-        if (prop in target) {
-            return target[prop];
-        } else {
-            return '?'; // 默认值
-        }
-    },
-    set(target, prop, val, instance) { // 拦截写入操作
-        if (typeof val == 'number') {
-            // 如果不对值进行修改,单纯的赋值 直接返回true就行了
-            // 不写return 或者返回任何 falsy值，则该操作将触发 TypeError
-            target[prop] = val;
-            return true;
-        } else {
-            return false;
-        }
+  get(target, prop) {
+    if (prop in target) {
+      return target[prop];
+    } else {
+      return "?"; // 默认值
     }
+  },
+  set(target, prop, val, instance) {
+    // 拦截写入操作
+    if (typeof val == "number") {
+      // 如果不对值进行修改,单纯的赋值 直接返回true就行了
+      // 不写return 或者返回任何 falsy值，则该操作将触发 TypeError
+      target[prop] = val;
+      return true;
+    } else {
+      return false;
+    }
+  },
 });
 ```
