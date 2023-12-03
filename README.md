@@ -1962,3 +1962,8 @@ numbersProxy = new Proxy(numbers, {
   },
 });
 ```
+## 计算机基础
+[计算机网络](https://juejin.cn/post/6844904079974465544) 
+
+### 浏览器缓存机制
+ [强缓存和协商缓存](https://juejin.cn/post/6844903593275817998?searchId=202312032154062739858CED3445D3FCBB)
