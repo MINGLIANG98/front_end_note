@@ -845,6 +845,33 @@ uselayoutefft and useeffect
 
 链接：<https://juejin.cn/post/6844903986823200776>
 
+### 二叉树解析
+```js
+// 二叉树先序遍历
+  const fun = function (node) {
+      if (!node) return []
+      let result = []
+      result.push(node.val)
+      if (node.left) result = result.push(...fun(node.left))
+      if (node.right) result = result.concat(fun(node.right))
+      return result
+  }
+
+  // 定义二叉树节点的构造函数
+  function TreeNode(val) {
+      this.val = val;
+      this.left = this.right = null;
+  }
+
+  // 创建二叉树
+  const root = new TreeNode(1);
+  root.left = new TreeNode(2);
+  root.right = new TreeNode(3);
+  root.left.left = new TreeNode(4);
+  root.left.right = new TreeNode(5);
+  // 测试
+  fun(root)
+```
 ## 防抖和节流 throttle（节流）与 debounce（防抖）
 
 <https://www.cnblogs.com/dreamsqin/p/11305028.html>
@@ -1699,6 +1726,8 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 ### Diff 算法
 
 [react 和 vue diff 算法的对比](https://juejin.cn/post/7116141318853623839?searchId=2023112909492183EAA552FB8420C74D3C)
+
+[分析虚拟dom的渲染](https://juejin.cn/post/6844903824683958286)
 
 ## web 本地数存储 离线存储
 
