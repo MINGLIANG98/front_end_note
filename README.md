@@ -1598,15 +1598,21 @@ git clone -b 想要拉取的分支名(branch) xxx(URL) 文件名(省略为原名
 <https://juejin.cn/post/7128369638794231839>
 **客户端渲染 CSR**
 常规开发框架单页面应用 js 动态渲染 dom 树结构==动态渲染==客户端渲染
+**类似于 vue react等单页面应用 通过请求一些js文件组装出页面结构的应用都是csr**
 **服务端渲染 SSR**
 通过 http 请求返回整个 html 文本页面直接给浏览器解析 不需要 js 脚本解析
 服务端组装 HTML 并返回给前端的过程==服务端 SSR
+优点： 
+1. 有利于SEO  因为页面是组装好的 更有利于爬虫
+2. 首屏渲染速度更快 （LCP: large-content-paint更快）
+缺点：占用服务器资源，切换页面需要重复请求，白屏时间延长（FP: first-paint慢） 
+
 **静态网站生成 SSG**
 html 页面内容在 build 的时候就定型了，相对于 SSR 不需要后端二次请求查询组装，直接返回 build 源代码
 缺陷：静态页面，不适合展示内容灵活的 web 页面
 优势：适合个人博客，使用文档等充满静态页面的网站
-**预加载**
 
+**预加载**
 - preload 告诉浏览器该请求资源需要预先加载 提高优先级
 - preconnect 告诉浏览器需要该域名的资源
 - dns-prefetch dns 预获取 告诉浏览器预先解析域名
@@ -1655,7 +1661,6 @@ jest.js
 <https://zhuanlan.zhihu.com/p/100504877>
 
 ## 闭包
-
 - 高阶函数 函数作为一个函数的参数或者返回值 都叫闭包
   <https://www.liaoxuefeng.com/wiki/1022910821149312/1023021250770016>
   <https://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html>
@@ -1663,6 +1668,22 @@ jest.js
   <https://www.quirksmode.org/js/this.html>
   react 闭包 和 addEventListner 闭包
   <https://zhuanlan.zhihu.com/p/514151293>
+### 内存泄漏
+定义：
+**程序对一段内存失去控制**
+1. 不规范使用闭包
+2. map引用对象
+3. 定时器
+4. 挂载到window上的全局变量
+### v8垃圾回收机制
+
+概念： V8 是由 Google 开发的 JavaScript 引擎，主要用于 Chrome 浏览器。
+
+V8 引擎中的垃圾回收机制负责管理和释放不再被程序使用的内存，以确保 JavaScript 程序运行的高效性和稳定性。
+以下是 V8 引擎的垃圾回收机制的一些关键特点：
+1. 分代垃圾回收： V8 使用了分代垃圾回收策略，将内存分为新生代（Young Generation）和老生代（Old Generation）两个区域。新生代主要存储新创建的对象，老生代存储生存时间较长的对象。不同的区域使用不同的垃圾回收算法。
+2. Mark-Sweep 与标记清除： 对于老生代，V8 使用标记-清除算法。该算法分为两个阶段，标记阶段和清除阶段。在标记阶段，垃圾回收器标记出所有活动对象。在清除阶段，清除掉未标记的对象，释放其内存。
+...
 
 ## antd ui 库源码分析
 
@@ -1918,6 +1939,40 @@ call apply 都是使用一个指定的 this 和若干个参数的情况下调用
 
 ## webWorker
 
+**使用场景**
+```js
+// worker.js
+
+// 在 Web Worker 内部运行的代码
+onmessage = function(event) {
+  const listLength = event.data;
+
+  // 模拟耗时任务
+  const result = [];
+  for (let index = 0; index < listLength; index++) {
+    let val = index;
+    result.push(val);
+  }
+
+  // 将结果发送回主线程
+  postMessage(result);
+};
+
+// main.js
+
+// 创建 Web Worker
+const worker = new Worker('./worker.js');
+
+// 定义任务完成时的处理函数
+worker.onmessage = function(event) {
+  const result = event.data;
+  console.log('主线程收到worker线程消息：', result)
+};
+
+// 向 Web Worker 发送任务参数
+worker.postMessage(1000000);
+
+```
 [webwoker 使用场景](https://juejin.cn/post/7148239142806093838)
 [webwoker demo](https://juejin.cn/post/7176788060619669565?searchId=20231117141815FF86F552F08361E53DCD)
 **react 示例**
