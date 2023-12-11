@@ -140,9 +140,19 @@ animation: 3s slidein;
 
 ## Promise
 
+promie.then(()=>{})
+then方法调用自己后会返回一个fulfilled状态的promise实例
+所以then后面可以继续链式调用then方法 //因为每一个then都会返回一个 promise(fulfilled)
 **EventLoop 和 微任务 宏任务**
 同步执行->微任务->宏任务
-按照函数层级执行，每一个层级宏任务，微任务互相对应 按照层级执行
+<!-- 按照函数层级执行，每一个层级宏任务，微任务互相对应 按照层级执行 -->
+**事件循环的执行顺序可以概括为：**
+
+1. 执行当前宏任务的同步代码。
+2. 清空当前宏任务的微任务队列，依次执行微任务。
+3. 取出下一个宏任务执行，重复步骤 1 和 2。
+**在这个过程中，微任务总是在宏任务之间执行。而在一个宏任务内，同步代码执行完毕后会立即执行微任务队列中的微任务，然后再继续执行下一个宏任务。这就是事件循环的基本执行顺序。**
+[对于事件循环的理解及练习题]<https://mp.weixin.qq.com/s/ahIxhHWz4xTEEgEfdp_Pnw>
 <https://juejin.cn/post/7073099307510923295>
 <https://juejin.cn/post/6920239138893627406>
 
@@ -846,32 +856,34 @@ uselayoutefft and useeffect
 链接：<https://juejin.cn/post/6844903986823200776>
 
 ### 二叉树解析
+
 ```js
 // 二叉树先序遍历
-  const fun = function (node) {
-      if (!node) return []
-      let result = []
-      result.push(node.val)
-      if (node.left) result = result.push(...fun(node.left))
-      if (node.right) result = result.concat(fun(node.right))
-      return result
-  }
+const fun = function (node) {
+  if (!node) return [];
+  let result = [];
+  result.push(node.val);
+  if (node.left) result = result.push(...fun(node.left));
+  if (node.right) result = result.concat(fun(node.right));
+  return result;
+};
 
-  // 定义二叉树节点的构造函数
-  function TreeNode(val) {
-      this.val = val;
-      this.left = this.right = null;
-  }
+// 定义二叉树节点的构造函数
+function TreeNode(val) {
+  this.val = val;
+  this.left = this.right = null;
+}
 
-  // 创建二叉树
-  const root = new TreeNode(1);
-  root.left = new TreeNode(2);
-  root.right = new TreeNode(3);
-  root.left.left = new TreeNode(4);
-  root.left.right = new TreeNode(5);
-  // 测试
-  fun(root)
+// 创建二叉树
+const root = new TreeNode(1);
+root.left = new TreeNode(2);
+root.right = new TreeNode(3);
+root.left.left = new TreeNode(4);
+root.left.right = new TreeNode(5);
+// 测试
+fun(root);
 ```
+
 ## 防抖和节流 throttle（节流）与 debounce（防抖）
 
 <https://www.cnblogs.com/dreamsqin/p/11305028.html>
@@ -1596,14 +1608,15 @@ git clone -b 想要拉取的分支名(branch) xxx(URL) 文件名(省略为原名
 <https://juejin.cn/post/7128369638794231839>
 **客户端渲染 CSR**
 常规开发框架单页面应用 js 动态渲染 dom 树结构==动态渲染==客户端渲染
-**类似于 vue react等单页面应用 通过请求一些js文件组装出页面结构的应用都是csr**
+**类似于 vue react 等单页面应用 通过请求一些 js 文件组装出页面结构的应用都是 csr**
 **服务端渲染 SSR**
 通过 http 请求返回整个 html 文本页面直接给浏览器解析 不需要 js 脚本解析
 服务端组装 HTML 并返回给前端的过程==服务端 SSR
-优点： 
-1. 有利于SEO  因为页面是组装好的 更有利于爬虫
-2. 首屏渲染速度更快 （LCP: large-content-paint更快）
-缺点：占用服务器资源，切换页面需要重复请求，白屏时间延长（FP: first-paint慢） 
+优点：
+
+1. 有利于 SEO 因为页面是组装好的 更有利于爬虫
+2. 首屏渲染速度更快 （LCP: large-content-paint 更快）
+   缺点：占用服务器资源，切换页面需要重复请求，白屏时间延长（FP: first-paint 慢）
 
 **静态网站生成 SSG**
 html 页面内容在 build 的时候就定型了，相对于 SSR 不需要后端二次请求查询组装，直接返回 build 源代码
@@ -1611,6 +1624,7 @@ html 页面内容在 build 的时候就定型了，相对于 SSR 不需要后端
 优势：适合个人博客，使用文档等充满静态页面的网站
 
 **预加载**
+
 - preload 告诉浏览器该请求资源需要预先加载 提高优先级
 - preconnect 告诉浏览器需要该域名的资源
 - dns-prefetch dns 预获取 告诉浏览器预先解析域名
@@ -1659,6 +1673,7 @@ jest.js
 <https://zhuanlan.zhihu.com/p/100504877>
 
 ## 闭包
+
 - 高阶函数 函数作为一个函数的参数或者返回值 都叫闭包
   <https://www.liaoxuefeng.com/wiki/1022910821149312/1023021250770016>
   <https://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html>
@@ -1666,22 +1681,29 @@ jest.js
   <https://www.quirksmode.org/js/this.html>
   react 闭包 和 addEventListner 闭包
   <https://zhuanlan.zhihu.com/p/514151293>
+
 ### 内存泄漏
+
 定义：
-**程序对一段内存失去控制**
+**程序对一段内存失去控制或者说无法被垃圾回收机制回收的内存**
+
 1. 不规范使用闭包
-2. map引用对象
+2. map 引用对象
 3. 定时器
-4. 挂载到window上的全局变量
-### v8垃圾回收机制
+4. 挂载到 window 上的全局变量
+
+[内存泄漏和垃圾回收机制](https://juejin.cn/post/6984188410659340324?searchId=202312071433361E7A97D5B4901AF61D2C)
+
+### v8 垃圾回收机制
 
 概念： V8 是由 Google 开发的 JavaScript 引擎，主要用于 Chrome 浏览器。
 
 V8 引擎中的垃圾回收机制负责管理和释放不再被程序使用的内存，以确保 JavaScript 程序运行的高效性和稳定性。
 以下是 V8 引擎的垃圾回收机制的一些关键特点：
+
 1. 分代垃圾回收： V8 使用了分代垃圾回收策略，将内存分为新生代（Young Generation）和老生代（Old Generation）两个区域。新生代主要存储新创建的对象，老生代存储生存时间较长的对象。不同的区域使用不同的垃圾回收算法。
 2. Mark-Sweep 与标记清除： 对于老生代，V8 使用标记-清除算法。该算法分为两个阶段，标记阶段和清除阶段。在标记阶段，垃圾回收器标记出所有活动对象。在清除阶段，清除掉未标记的对象，释放其内存。
-...
+   ...
 
 ## antd ui 库源码分析
 
@@ -1748,7 +1770,7 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 
 [react 和 vue diff 算法的对比](https://juejin.cn/post/7116141318853623839?searchId=2023112909492183EAA552FB8420C74D3C)
 
-[分析虚拟dom的渲染](https://juejin.cn/post/6844903824683958286)
+[分析虚拟 dom 的渲染](https://juejin.cn/post/6844903824683958286)
 
 ## web 本地数存储 离线存储
 
@@ -1763,6 +1785,8 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 [处理组件重复调用请求](https://juejin.cn/post/7222096611635003451)
 
 ## 设计模式
+
+[ts 实现 23 种设计模式](https://juejin.cn/post/6897620357885198344)
 
 ### 单例模式
 
@@ -1936,11 +1960,12 @@ call apply 都是使用一个指定的 this 和若干个参数的情况下调用
 ## webWorker
 
 **使用场景**
+
 ```js
 // worker.js
 
 // 在 Web Worker 内部运行的代码
-onmessage = function(event) {
+onmessage = function (event) {
   const listLength = event.data;
 
   // 模拟耗时任务
@@ -1957,18 +1982,18 @@ onmessage = function(event) {
 // main.js
 
 // 创建 Web Worker
-const worker = new Worker('./worker.js');
+const worker = new Worker("./worker.js");
 
 // 定义任务完成时的处理函数
-worker.onmessage = function(event) {
+worker.onmessage = function (event) {
   const result = event.data;
-  console.log('主线程收到worker线程消息：', result)
+  console.log("主线程收到worker线程消息：", result);
 };
 
 // 向 Web Worker 发送任务参数
 worker.postMessage(1000000);
-
 ```
+
 [webwoker 使用场景](https://juejin.cn/post/7148239142806093838)
 [webwoker demo](https://juejin.cn/post/7176788060619669565?searchId=20231117141815FF86F552F08361E53DCD)
 **react 示例**
@@ -2046,10 +2071,11 @@ numbersProxy = new Proxy(numbers, {
   },
 });
 ```
+
 ## 计算机基础
-[计算机网络](https://juejin.cn/post/6844904079974465544) 
+
+[计算机网络](https://juejin.cn/post/6844904079974465544)
 
 ### 浏览器缓存机制
- [强缓存和协商缓存](https://juejin.cn/post/6844903593275817998?searchId=202312032154062739858CED3445D3FCBB)
 
- 
+[强缓存和协商缓存](https://juejin.cn/post/6844903593275817998?searchId=202312032154062739858CED3445D3FCBB)
