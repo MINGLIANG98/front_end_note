@@ -1,6 +1,6 @@
 {
   "name": "publish-jekins-webpack-plugin",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "description": "publish to jekins",
   "main": "./lib/index.js",
   "scripts": {
@@ -10,8 +10,8 @@
     "publish"
   ],
   "author": "qianmingliang",
-  "license": "ISC",
-  "devDependencies": {
+  "license": "MIT",
+  "dependencies": {
     "archiver": "^6.0.1"
   },
   "repository": {
