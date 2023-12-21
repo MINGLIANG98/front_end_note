@@ -141,20 +141,22 @@ animation: 3s slidein;
 ## Promise
 
 promie.then(()=>{})
-then方法调用自己后会返回一个fulfilled状态的promise实例
-所以then后面可以继续链式调用then方法 //因为每一个then都会返回一个 promise(fulfilled)
+then 方法调用自己后会返回一个 fulfilled 状态的 promise 实例
+所以 then 后面可以继续链式调用 then 方法 //因为每一个 then 都会返回一个 promise(fulfilled)
 **EventLoop 和 微任务 宏任务**
 同步执行->微任务->宏任务
+
 <!-- 按照函数层级执行，每一个层级宏任务，微任务互相对应 按照层级执行 -->
+
 **事件循环的执行顺序可以概括为：**
 
 1. 执行当前宏任务的同步代码。
 2. 清空当前宏任务的微任务队列，依次执行微任务。
 3. 取出下一个宏任务执行，重复步骤 1 和 2。
-**在这个过程中，微任务总是在宏任务之间执行。而在一个宏任务内，同步代码执行完毕后会立即执行微任务队列中的微任务，然后再继续执行下一个宏任务。这就是事件循环的基本执行顺序。**
-[对于事件循环的理解及练习题]<https://mp.weixin.qq.com/s/ahIxhHWz4xTEEgEfdp_Pnw>
-<https://juejin.cn/post/7073099307510923295>
-<https://juejin.cn/post/6920239138893627406>
+   **在这个过程中，微任务总是在宏任务之间执行。而在一个宏任务内，同步代码执行完毕后会立即执行微任务队列中的微任务，然后再继续执行下一个宏任务。这就是事件循环的基本执行顺序。**
+   [对于事件循环的理解及练习题]<https://mp.weixin.qq.com/s/ahIxhHWz4xTEEgEfdp_Pnw>
+   <https://juejin.cn/post/7073099307510923295>
+   <https://juejin.cn/post/6920239138893627406>
 
 <!-- 2022_4_27 -->
 
@@ -891,6 +893,47 @@ fun(root);
 <https://www.jianshu.com/p/9573703dfe78>
 
 ## CSS
+
+**flex 布局**
+[flex:1 的元素高度被子元素撑开的解决办法和原因](https://juejin.cn/post/6931638878512087053)
+
+```css
+/* 关键字值 */
+flex: auto;
+flex: initial;
+flex: none;
+
+/* 单值，无单位数字：flex-grow
+flex-basis 此时等于 0。 */
+flex: 2;
+
+/* 单值，宽度/高度：flex-basis */
+flex: 10em;
+flex: 30px;
+flex: min-content;
+
+/* 双值：flex-grow | flex-basis */
+flex: 1 30px;
+
+/* 双值：flex-grow | flex-shrink */
+flex: 2 2;
+
+/* 三值：flex-grow | flex-shrink | flex-basis */
+flex: 2 2 10%;
+
+/* 全局值 */
+flex: inherit;
+flex: initial;
+flex: revert;
+flex: revert-layer;
+flex: unset;
+1.flex-grow CSS 设置 flex 项 主尺寸 的 flex 增长系数。 /*默认值0*/
+2.flex-shrink 属性指定了 flex 元素的收缩规则。/*flex 元素仅在默认宽度之和大于容器的时候才会发生收缩 (flex布局子元素宽度之和大于盒子大小才会生效)*/，其收缩的大小是依据 flex-shrink 的值。
+3.flex-basis 指定了 flex 元素在主轴方向上的初始大小。如果不使用 box-sizing 改变盒模型的话，那么这个属性就决定了 flex 元素的内容盒（content-box）的尺寸。
+
+4.flex-direction 属性指定了内部元素是如何在 flex 容器中布局的，定义了主轴的方向 (正方向或反方向)。
+5.flex-wrap 属性指定 flex 元素单行显示还是多行显示。如果允许换行，这个属性允许你控制行的堆叠方向。
+```
 
 **grid 布局**
 calc 计算
