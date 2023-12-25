@@ -10,12 +10,12 @@
     "publish"
   ],
   "author": "qianmingliang",
-  "license": "ISC",
-  "devDependencies": {
+  "license": "MIT",
+  "dependencies": {
     "archiver": "^6.0.1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/MINGLIANG98/front_end_note"
+    "url": "https://github.com/MINGLIANG98/front_end_note/tree/main/publish-jekins-webpack-plugin"
   }
 }
