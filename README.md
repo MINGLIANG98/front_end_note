@@ -1631,6 +1631,43 @@ for (const language of languages) {
 // output -> JavaScript Python Go
 ```
 
+## == 与===
+
+**==运算符**
+如果其中一个是（引用类型） 另外一个是（基本类型）在比较运算符时候,引用类型隐式转换会调用本类型 toString 或 valueOf 方法
+具体为
+
+1. 先调用 valueOf() 方法：
+   JavaScript 引擎首先尝试调用对象的 valueOf 方法。
+   如果 valueOf 返回的是原始值（非对象），则使用该值进行比较。
+   如果 valueOf 返回的仍然是一个对象，或者 valueOf 方法不存在或返回不可转换为原始值的结果，则继续执行下一步。
+2. 再调用 toString() 方法：
+   如果 valueOf 方法没有返回一个原始值，或者 valueOf 方法不存在，JavaScript 引擎接着尝试调用对象的 toString 方法。
+   如果 toString 返回的是原始值，则使用该值进行比较。
+   如果 toString 返回的仍然是一个对象，或者 toString 方法不存在或返回不可转换为原始值的结果，则比较结果为 undefined。
+
+```js
+const obj = {
+  valueOf: function () {
+    return 42;
+  },
+  toString: function () {
+    return "Hello";
+  },
+};
+
+console.log(obj == 42); // true，因为调用 valueOf 返回 42
+console.log(obj == "Hello"); // false，因为调用 valueOf 返回的不是原始值，接着调用 toString 返回 "Hello"
+
+// 对于普通对象 (比如 {})，它们的 valueOf 方法默认是返回对象本身，而 toString 方法默认会返回 [object Object]。因此，如果没有自定义这两个方法，通常会先调用 valueOf，然后再调用 toString。
+// 字符串和number 比较时候 会执行js内部一个叫ToNumber的内部方法
+`对于字符串来说，ToNumber 抽象操作的过程是这样的：
+1.移除字符串的前导和后置空格。
+2.如果字符串是 ""（空字符串），转换结果是 0。
+3.如果字符串可以解析为数字，例如 "123"，则转换为相应的数字值。
+4.如果字符串不能解析为数字，例如 "abc"，转换结果是 NaN。`;
+```
+
 ## lodash 源码解析
 
 **假值:例如 false, null,0, "", undefined, 和 NaN 都是被认为是“假值==false”。**

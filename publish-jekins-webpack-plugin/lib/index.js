@@ -9,7 +9,7 @@ const { exec } = require('child_process');
  * new ArchiveDistPlugin({
  *  targetPath: '/custom/target/path/dist.zip',
  *  userName: 'yourUsername',
- *  uerToken: 'yourUserToken',
+ *  userToken: 'yourUserToken',
  *  url: 'yourJenkinsURL',
  * });
  * or
@@ -24,7 +24,7 @@ class PublishJekinsPlugin {
      * (
      * {
      * userName:string
-     * uerToken:string
+     * userToken:string
      * url:string
      * }|
      * sshRestful:string
@@ -62,10 +62,10 @@ class PublishJekinsPlugin {
 
     reloadServer() {
         // Your reloadServer logic here
-        const { userName, uerToken, url, sshRestful } = this.options;
-        if (userName && uerToken && url) {
+        const { userName, userToken, url, sshRestful } = this.options;
+        if (userName && userToken && url) {
             // Trigger Jenkins build using HTTP
-            this.triggerJenkinsBuild(userName, uerToken, url);
+            this.triggerJenkinsBuild(userName, userToken, url);
         } else if (sshRestful) {
             // Trigger Jenkins build using SSH
             this.triggerJenkinsBuildSSH(sshRestful);
@@ -73,9 +73,9 @@ class PublishJekinsPlugin {
             console.error('Invalid configuration for reloading server.');
         }
     }
-    triggerJenkinsBuild(userName, uerToken, url) {
+    triggerJenkinsBuild(userName, userToken, url) {
         exec(
-            `curl -X POST  -u ${userName}:${uerToken} ${url}`,
+            `curl -X POST  -u ${userName}:${userToken} ${url}`,
             (error) => {
                 if (error) {
                     console.error(`Error triggering Jenkins build: ${error.message}`);

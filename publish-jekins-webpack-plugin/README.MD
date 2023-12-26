@@ -23,7 +23,7 @@ new PublishJekinsPlugin({
   // jekins账户
   userName: "yourUsername",
   // 账户密钥
-  uerToken: "yourUserToken",
+  userToken: "yourUserToken",
   // jekins提供的restful api 在jekins项目工程里面配置
   url: "yourJenkinsURL",
 });
