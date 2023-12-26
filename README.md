@@ -1718,6 +1718,13 @@ html 页面内容在 build 的时候就定型了，相对于 SSR 不需要后端
 }
 $ npm run build === $ node build.js
 
+### NPM 如何管理依赖
+?? 好像不正确
+1. dependencies  npm包的依赖在运行 npm install（npm包）的时候会一并下载 并且当使用者打包的时候 npm包的依赖也会被打到使用者的dist包中
+2. peerDependencies:npm包的依赖在运行 npm install（npm包）的时候会一并下载  与dependencies的区别就是
+npm包的依赖 不会被打到使用者的dist包中
+3. devDependencies   当npm包被下载的时候 npm包的 dev依赖不会自动安装  一般用于测试场景 基本用不到
+
 ## js eval 函数解析
 
 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/eval>
@@ -2159,3 +2166,11 @@ numbersProxy = new Proxy(numbers, {
 ### 浏览器缓存机制
 
 [强缓存和协商缓存](https://juejin.cn/post/6844903593275817998?searchId=202312032154062739858CED3445D3FCBB)
+
+### TCP三次握手
+**为什么是三次握手**
+三次握手之所以是三次是保证client和server均让对方知道自己的接收和发送能力没问题而保证的最小次数。
+第一次client => server 只能server判断出client具备发送能力
+第二次 server => client client就可以判断出server具备发送和接受能力。此时client还需让server知道自己接收能力没问题于是就有了第三次
+第三次 client => server 双方均保证了自己的接收和发送能力没有问题
+其中，为了保证后续的握手是为了应答上一个握手，每次握手都会带一个标识 seq，后续的ACK都会对这个seq进行加一来进行确认。
