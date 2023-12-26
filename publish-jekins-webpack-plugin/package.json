@@ -1,6 +1,6 @@
 {
   "name": "publish-jekins-webpack-plugin",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "description": "publish to jekins",
   "main": "./lib/index.js",
   "scripts": {
