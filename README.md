@@ -6,6 +6,91 @@
 
 # 开发笔记
 
+## ES6+
+
+### ES2015(es6)
+
+proxy 
+类 Class,构造函数语法糖 更直观的构造函数写法
+模块化 es6 模块化方案 export+import 用于 ES6 环境 在浏览器运行需转义 支持异步导入，具名导入，可实现懒加载等优化
+箭头函数 没有自己的 this 使用所在作用域或者父级作用域的 this
+函数参数默认值 当传参为 undefined 的时候使用默认值 注意 null 视为有效值
+模板字符串  
+解构赋值 可用于数组/对象
+延展操作符 可扩展所有可迭代对象 必将其以 key-value 的方式展开 比如 对象，数组，字符串（内部有迭代器）
+对象属性简写
+symbol  可作为唯一key symbol(params?:any) 不可作为构造函数调用
+
+```js
+const name = "Ming",
+  age = "18",
+  city = "Shanghai";
+const student = {
+  name,
+  age,
+  city,
+};
+console.log(student); //{name: "Ming", age: "18", city: "Shanghai"}
+```
+
+Promise 基于 promiseA+规范的统一标准
+Let 与 Const
+
+### ES2016(es7)
+
+1. Array.prototype.includes() 数组包含判断 判断逻辑为=== 全匹配
+   类似 String.prototype.includes() //es2015 新增
+
+2. 指数操作符 (**)
+   ** == Math.pow()
+   [2**10==1024]
+
+### ES2017(ES8)
+
+1. async/await
+2. Object.entries(),Object.values() //object.keys 是 es5
+3. Object.getOwnPropertyDescriptors() 获取对象所有属性（包括不可枚举属性）的描述信息 // Object.getOwnPropertyDescriptor() 获取单个指定属性 es5
+
+### ES2018 (ES9)
+
+1. 异步迭代
+
+  ```jsx
+  async function process(array) {
+    for await (let i of array) {
+      doSomething(i);
+    }
+  }
+  ```
+
+2. Promise.finally()
+3. Rest/Spread 属性 剩余参数方法  function(a,...rest){}
+
+### ES2019(ES10)
+
+1. Array.prototype.flat() Array.prototype.flatMap()
+2. String的trimStart()方法和trimEnd()方法   分别去除字符串首尾空白字符
+3. Object.fromEntries() 是object.entries()的反转 可以将键值对转换为数组
+
+```js
+const map = new Map([ ['foo', 'bar'], ['baz', 42] ]);
+const obj = Object.fromEntries(map);
+console.log(obj); // { foo: "bar", baz: 42 }
+
+const arr = [ ['0', 'a'], ['1', 'b'], ['2', 'c'] ];
+const obj = Object.fromEntries(arr);
+console.log(obj); // { 0: "a", 1: "b", 2: "c" }
+
+```
+
+### ES2020(ES11)
+
+1. 可选链 (?.)：允许安全地访问可能不存在的属性，而不会引发错误。
+2. 空值合并运算符 (??)：提供了一个默认值，类似于逻辑或运算符，但只在左侧值为 null 或 undefined 时返回。
+3. BigInt：引入了对大整数的原生支持。处理超出哦number范围的整数
+4. Promise.allSettled()：返回一个 Promise，该 Promise 在所有给定的 Promise 已解析或已拒绝后解析。
+区别于 promise.all() ，Promise.allSettled() 不会在任何 Promise 被拒绝时立即拒绝。相反，它会等待所有 Promise 完成（无论结果如何）
+
 ## Typescript
 
 **ts 逻辑运算符 & | ?? ?. !**
@@ -47,6 +132,12 @@ todo
 
 **interface AND type**
 常规用法
+
+### 区别
+
+1. type 可以定义元组 联合类型
+2. type 可以定义基本类型别名 type 的翻译就是类型别名
+3. interface 可以类型合并多个会 merge(重名)，type 重名会报错
 
 ### 什么时候推荐用 type 什么时候用 interface ？
 
@@ -1645,6 +1736,7 @@ for (const language of languages) {
    如果 valueOf 方法没有返回一个原始值，或者 valueOf 方法不存在，JavaScript 引擎接着尝试调用对象的 toString 方法。
    如果 toString 返回的是原始值，则使用该值进行比较。
    如果 toString 返回的仍然是一个对象，或者 toString 方法不存在或返回不可转换为原始值的结果，则比较结果为 undefined。
+   [js 隐式转换](https://juejin.cn/post/6844903557968166926#comment)
 
 ```js
 const obj = {
@@ -1719,11 +1811,13 @@ html 页面内容在 build 的时候就定型了，相对于 SSR 不需要后端
 $ npm run build === $ node build.js
 
 ### NPM 如何管理依赖
+
 ?? 好像不正确
-1. dependencies  npm包的依赖在运行 npm install（npm包）的时候会一并下载 并且当使用者打包的时候 npm包的依赖也会被打到使用者的dist包中
-2. peerDependencies:npm包的依赖在运行 npm install（npm包）的时候会一并下载  与dependencies的区别就是
-npm包的依赖 不会被打到使用者的dist包中
-3. devDependencies   当npm包被下载的时候 npm包的 dev依赖不会自动安装  一般用于测试场景 基本用不到
+
+1. dependencies npm 包的依赖在运行 npm install（npm 包）的时候会一并下载 并且当使用者打包的时候 npm 包的依赖也会被打到使用者的 dist 包中
+2. peerDependencies:npm 包的依赖在运行 npm install（npm 包）的时候会一并下载 与 dependencies 的区别就是
+   npm 包的依赖 不会被打到使用者的 dist 包中
+3. devDependencies 当 npm 包被下载的时候 npm 包的 dev 依赖不会自动安装 一般用于测试场景 基本用不到
 
 ## js eval 函数解析
 
@@ -2167,10 +2261,11 @@ numbersProxy = new Proxy(numbers, {
 
 [强缓存和协商缓存](https://juejin.cn/post/6844903593275817998?searchId=202312032154062739858CED3445D3FCBB)
 
-### TCP三次握手
+### TCP 三次握手
+
 **为什么是三次握手**
-三次握手之所以是三次是保证client和server均让对方知道自己的接收和发送能力没问题而保证的最小次数。
-第一次client => server 只能server判断出client具备发送能力
-第二次 server => client client就可以判断出server具备发送和接受能力。此时client还需让server知道自己接收能力没问题于是就有了第三次
+三次握手之所以是三次是保证 client 和 server 均让对方知道自己的接收和发送能力没问题而保证的最小次数。
+第一次 client => server 只能 server 判断出 client 具备发送能力
+第二次 server => client client 就可以判断出 server 具备发送和接受能力。此时 client 还需让 server 知道自己接收能力没问题于是就有了第三次
 第三次 client => server 双方均保证了自己的接收和发送能力没有问题
-其中，为了保证后续的握手是为了应答上一个握手，每次握手都会带一个标识 seq，后续的ACK都会对这个seq进行加一来进行确认。
+其中，为了保证后续的握手是为了应答上一个握手，每次握手都会带一个标识 seq，后续的 ACK 都会对这个 seq 进行加一来进行确认。
