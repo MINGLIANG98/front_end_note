@@ -2298,3 +2298,7 @@ numbersProxy = new Proxy(numbers, {
 ## react18+ts+vite+redux+antd 管理系统参考模板
 
 <https://github.com/southliu/react-admin>
+
+## nginx
+
+[部署小册](https://juejin.cn/post/7295926959842033699)
