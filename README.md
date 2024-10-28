@@ -1325,6 +1325,10 @@ useContext createContext 创建数据变量，子组件通过 useContext 导入
 
 <https://segmentfault.com/a/1190000039200472>
 
+### React源码理解
+
+[运行解析](https://jser.pro/ddir/rie?reactVersion=18.3.1&snippetKey=hq8jm2ylzb9u8eh468)
+
 ### React Filber 时间切片详解
 
 <https://juejin.cn/post/6844903975112671239>
@@ -2302,3 +2306,7 @@ numbersProxy = new Proxy(numbers, {
 ## nginx
 
 [部署小册](https://juejin.cn/post/7295926959842033699)
+
+## cursor 使用
+
+[编辑器邮箱验证](https://juejin.cn/post/7407838946922037298)
