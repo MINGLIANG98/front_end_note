@@ -355,6 +355,19 @@ class 本质上是一个构造函数的语法糖，其底层实际上是通过 �
 - `操作符instanceof正是通过探测obj.__proto__.__proto__... === Constructor.prototype来验证obj是否是Constructor的实例`
   [详解 es6 中的 class](https://juejin.cn/post/6844904086089760775)
 
+- abstract  ts 关键字  父类中预先提供接口 子类中实现
+  `tip:抽象类是提供其他类继承的基类，不能直接实例化。抽象类中的抽象方法不包含具体实现，必须在子类中实现。`
+- override  ts 关键字 子类中重写父类方法，实现
+  `tip:override 是 ts 中的关键字，用于表示子类中重写父类的方法。`
+- public  ts 关键字 公共属性 子类中可以访问
+- private  ts 关键字 私有属性 子类中不可以访问
+- protected  ts 关键字 受保护属性 子类中可以访问
+- readonly  ts 关键字 只读属性 子类中不可以修改
+- static  js 关键字 静态属性 子类中可以访问
+- implements  ts 关键字   class实现interface接口,可以理解为ts类型约束  
+- extends  js 关键字 继承 子类中继承父类
+- get/set  js 关键字 获取和设置属性
+
 ## unit32Array 获取随机 key
 
 <!-- 2022_4_29  -->
@@ -719,7 +732,7 @@ map()
 map 即是 “映射”的意思 ，原数组被“映射”成对应新数组。 ==>拷贝\_映射
 map：支持 return，相当与原数组克隆了一份，把克隆的每项改变了，也不影响原数组。
 
-```js
+````js
 const foo = [5,1,3,7,4].map((item,index) => {
     console.log(`索引：${index}，数值：${item}`)
     return item + 2
@@ -732,7 +745,7 @@ console.log(foo)
   索引：3，数值：7
   索引：4，数值：4
   [7, 3, 5, 9, 6]
-```
+```cusror
 
 reduce() / reduceRight() 累加器
 reduce 从左到右将数组元素做“叠加”处理，返回一个值。reduceRight 从右到左。 不会改变原数组
@@ -754,7 +767,7 @@ console.log(foo)
   叠加：9，当前：7
   叠加：16，当前：4
   20
-```
+````
 
 Object,keys 遍历对象的属性
 Object.keys 方法的参数是一个对象，返回一个数组。该数组的成员都是该对象自身的（而不是继承的）所有属性名，且只返回可枚举的属性。
@@ -1325,7 +1338,7 @@ useContext createContext 创建数据变量，子组件通过 useContext 导入
 
 <https://segmentfault.com/a/1190000039200472>
 
-### React源码理解
+### React 源码理解
 
 [运行解析](https://jser.pro/ddir/rie?reactVersion=18.3.1&snippetKey=hq8jm2ylzb9u8eh468)
 
@@ -1470,7 +1483,7 @@ const MyComponent = () => (
 - Output：告诉 webpack 如何命名输出的文件以及输出的目录
 - Loaders：由于 webpack 只能处理 javascript，所以我们需要对一些非 js 文件处理成 webpack 能够处理的模块，比如 sass 文件
 - Plugins：Loaders 将各类型的文件处理成 webpack 能够处理的模块，plugins 有着很强的能力。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量。但也是最复杂的一个。比如对 js 文件进行压缩优化的 UglifyJsPlugin 插件
- TerserPlugin  todo ---
+  TerserPlugin todo ---
 - Chunk：coding split 的产物，我们可以对一些代码打包成一个单独的 chunk，比如某些公共模块，去重，更好的利用缓存。或者按需加载某些功能模块，优化加载时间。在 webpack3 及以前我们都利用 CommonsChunkPlugin 将一些公共代码分割成一个 chunk，实现单独加载。在 webpack4 中 CommonsChunkPlugin 被废弃，使用 SplitChunksPlugin
 
 ['webpack 详解-腾讯'](https://juejin.cn/post/6844903573675835400)
@@ -2307,6 +2320,16 @@ numbersProxy = new Proxy(numbers, {
 
 [部署小册](https://juejin.cn/post/7295926959842033699)
 
-## cursor 使用
+## AI 编辑器
+
+### cursor
 
 [编辑器邮箱验证](https://juejin.cn/post/7407838946922037298)
+
+### Windsurf
+
+[windsurf 使用](https://juejin.cn/post/7437690913188839460?searchId=20241206104240B6E7B70623C21E8D8777)
+
+## 浏览器缩放画中画
+
+[浏览器缩放画中画](https://mp.weixin.qq.com/s/_gh0bGRJbMi9A2s8fbQFMQ)
