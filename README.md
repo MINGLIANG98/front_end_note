@@ -2001,6 +2001,12 @@ formItem 默认向下传递两个缺省值参数:onChange(组件响应方式/可
 - websql 使用简单，存储量大，兼容性差，备选
 - indexDB api 多且繁琐，存储量大、高版本浏览器兼容性较好，备选
 
+### indexDB 工具库
+
+idb：Jake Archibald 开发的轻量级 Promise 封装
+Dexie.js：功能全面的 IndexedDB 封装库
+localForage：使用类似 localStorage 的简单 API，但底层利用 IndexedDB
+
 [前端本地存储方案](https://juejin.cn/post/7199826518569779256)
 
 ## 请求缓存
@@ -2324,7 +2330,8 @@ numbersProxy = new Proxy(numbers, {
 
 ### cursor
 
-[编辑器邮箱验证](https://juejin.cn/post/7407838946922037298)
+<!-- [编辑器邮箱验证](https://juejin.cn/post/7407838946922037298) -->
+[重置机器码方案](https://github.com/yuaotian/go-cursor-help/tree/master)
 
 ### Windsurf
 
